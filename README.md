@@ -1,4 +1,4 @@
-## my dot-files
+## my dotfiles
 
 ### primary shell & package managers:
 - `bash` &mdash; default shell
