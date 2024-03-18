@@ -8,4 +8,5 @@ fi
 cd .dotfiles
 
 # install dots
-cp ./dots /usr/local/bin/dots
+rm -f /usr/local/bin/dots
+ln -s ./dots /usr/local/bin/dots
