@@ -44,7 +44,7 @@ shift 1
 
 case $action in
 	backup) backup $@;;
-	install) update $@;;
+	install) install $@;;
 	info) info $@;;
 	save-info) info $@ >$path/info.yaml;;
 	tool) /bin/bash $path/tools/$1.sh ${@:2};;
