@@ -21,4 +21,7 @@
 
 ### setup
 
-fetch and run `.dotfiles/tools/dots-setup.sh`
+- install brew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+- install dots: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/AlekseySav/dotfiles/main/tools/dots-setup.sh)"`
+- install core tools: `dots tool install-coretools`
+- install configs: `dots install`
