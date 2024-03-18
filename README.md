@@ -2,10 +2,10 @@
 
 ### primary shell & package managers:
 - `bash` &mdash; default shell
-- `homebrew` &mdash; CLI tools package manager
-- `mason.nvim` &mdash; lsp & dap package manager
-- `lazy.nvim` &mdash; nvim package manager
-- `tpm` &mdash; tmux package manager
+- `homebrew` &mdash; package manager for CLI tools 
+- `mason.nvim` &mdash; package manager for lsp & dap
+- `lazy.nvim` &mdash; package manager for nvim plugins
+- `tpm` &mdash; package manager for tmux
 
 ### code organization:
 - `config/` are linked to `~/.config/`
