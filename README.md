@@ -8,9 +8,10 @@
 - `tpm` &mdash; package manager for tmux
 
 ### code organization:
+- `.data/` is for backups, cache, etc.
 - `config/` are linked to `~/.config/`
 - `tools/` are accessed by `dot tool` command
-- `dots` is stored at `/usr/local/bin`
+- `dots` is linked to `/usr/local/bin`
 
 ### dots
 - `dots backup` &mdash; copy all managed dotfiles to `~/.dotfiles/.data/backup/`
@@ -20,7 +21,6 @@
 - `dots tool <cmd> [args...]` &mdash; run tool from `~/.dotfiles/tools/`
 
 ### setup
-
 - install brew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 - install dots: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/AlekseySav/dotfiles/main/tools/dots-setup.sh)"`
 - install core tools: `dots tool install-coretools`
