@@ -45,6 +45,7 @@ shift 1
 case $action in
 	backup) backup $@;;
 	install) install $@;;
+	update) dots tool dots-setup $@;;
 	info) info $@;;
 	save-info) info $@ >$path/info.yaml;;
 	tool) /bin/bash $path/tools/$1.sh ${@:2};;
