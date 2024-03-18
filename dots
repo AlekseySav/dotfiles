@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+path="$HOME/.dotfiles/"
+configs="$(ls $path/config)"
+
+backup() {
+	rm -rf "$path/.data/backup/config"
+	mkdir -p "$path/.data/backup/config"
+	for config in $configs; do
+		cp -r "$HOME/.config/$config" "$path/.data/backup/config/$config"
+	done
+}
+
+install() {
+	backup
+	for config in $configs; do
+		rm -rf "$HOME/.config/$config"
+		ln -s "$path/config/$config" "$HOME/.config/$config"
+		echo linking $config... >&2
+	done
+}
+
+info() {
+	echo "configs:"
+	for config in $configs; do
+		echo "  - $config"
+	done
+	echo
+
+	echo "brew packages:"
+	for pachage in $(brew leaves); do
+		echo "  - $pachage"
+	done
+	echo
+
+	echo "mason.nvim packages:"
+	for pachage in $(ls "$HOME/.local/share/nvim/mason/packages/"); do
+		echo "  - $pachage"
+	done
+}
+
+action=$1
+shift 1
+
+case $action in
+	backup) backup $@;;
+	install) update $@;;
+	info) info $@;;
+	save-info) info $@ >$path/info.yaml;;
+	tool) /bin/bash $path/tools/$1.sh ${@:2};;
+	*) echo "bad action" >&2;;
+esac
