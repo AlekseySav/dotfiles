@@ -8,10 +8,10 @@
 - `tpm` &mdash; package manager for tmux
 
 ### code organization:
-- `.data/` is for backups, cache, etc.
-- `config/` are linked to `~/.config/`
-- `tools/` are accessed by `dot tool` command
-- `dots` is linked to `/usr/local/bin`
+- `.data/` &mdash; for backups, cache, etc.
+- `config/` &mdash; each config is linked to `~/.config/$name`
+- `tools/` &mdash; small scripts, are accessed by `dots tool` command
+- `dots` &mdash; dotfiles manager, is linked to `/usr/local/bin/dots`
 
 ### dots
 - `dots backup` &mdash; copy all managed dotfiles to `~/.dotfiles/.data/backup/`
