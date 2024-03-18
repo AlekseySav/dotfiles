@@ -5,7 +5,7 @@ require('lazy').setup {
 	{
 		'navarasu/onedark.nvim',
 		priority = 1000,
-		opts = { style = 'cool' }
+		opts = { --[[ style = 'cool' ]] }
 	},
 	{
 		"folke/tokyonight.nvim",
@@ -17,6 +17,13 @@ require('lazy').setup {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000
+	},
+
+	-- lua line --
+	{
+		'nvim-lualine/lualine.nvim',
+		opts = {},
+		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 
 	-- file navigation --

@@ -12,7 +12,6 @@ vim.keymap.set('n', '<leader>ff', telescope.find_files)
 vim.keymap.set('n', '<leader>fg', telescope.live_grep)
 vim.keymap.set('n', '<leader>fh', telescope.help_tags)
 vim.keymap.set('n', '<leader>fd', function() telescope.find_files({ cwd = require('telescope.utils').buffer_dir() }) end)
--- vim.keymap.set('n', '<leader>fb', function() require('telescope.actions').delete_buffer({modified = 1}) require('telescope.builtin').buffers() end)
 
 -- harpoon
 vim.keymap.set('n', '<leader>a', require('harpoon.mark').add_file)
@@ -21,7 +20,6 @@ vim.keymap.set('n', '<leader>ht', function()
 	require('harpoon.term').gotoTerminal(1)
 	vim.fn.feedkeys('i')
 end)
--- vim.keymap.set('t', '<C-c>', '<C-c><C-\\><C-n>:b#<CR>')
 vim.keymap.set('t', '<C-Space>', '<C-\\><C-n>:b#<CR>')
 for i = 1, 9 do
 	vim.keymap.set('n', '<leader>' .. tostring(i), function() require('harpoon.ui').nav_file(i) end)
