@@ -11,5 +11,5 @@ brew install tmux
 brew install zoxide
 
 # install languages
-brew install rust
-brew install zig
+# brew install rust
+# brew install zig
