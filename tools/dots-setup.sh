@@ -10,5 +10,5 @@ cd .dotfiles
 git pull
 
 # install dots
-rm -f /usr/local/bin/dots
-ln -s "$HOME/.dotfiles/dots" /usr/local/bin/dots
+# rm -f /usr/local/bin/dots
+# ln -s "$HOME/.dotfiles/dots" /usr/local/bin/dots
