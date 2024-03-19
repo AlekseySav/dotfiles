@@ -43,11 +43,11 @@ action=$1
 shift 1
 
 case $action in
-	backup) backup $@;;
-	install) install $@;;
-	update) $HOME/.dotfiles/dots tool dots-setup $@;;
-	info) info $@;;
-	save-info) info $@ >$path/info.yaml;;
-	tool) /bin/bash $path/tools/$1.sh ${@:2};;
+	backup) backup "$@";;
+	install) install "$@";;
+	update) $HOME/.dotfiles/dots tool dots-setup "$@";;
+	info) info "$@";;
+	save-info) info "$@" >$path/info.yaml;;
+	tool) /bin/bash $path/tools/$1.sh "${@:2}";;
 	*) echo "bad action" >&2;;
 esac

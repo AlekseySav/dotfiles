@@ -4,7 +4,7 @@ vim.keymap.set('n', '<leader>lz', ':Lazy<CR>')
 vim.keymap.set('n', '<leader>e', ':E<CR>')
 vim.keymap.set('n', '<leader>so', ':w<CR>:source<CR>')
 vim.keymap.set('x', '<leader>y', '"+y')
-vim.keymap.set('n', '<leader>nn', function() al.msg('hello') end)
+vim.keymap.set('n', '<leader>nn', function() info('hello') end)
 
 -- telescope
 local telescope = require('telescope.builtin')
@@ -78,20 +78,20 @@ local function replace_text(mode, fmt)
 	else
 		vim.fn.feedkeys('VVV')
 		vim.cmd('sleep')
-		local a = vim.api.nvim_buf_get_mark(0, "<")[1]
-		al.msg(a .. ' ')
+		-- local a = vim.api.nvim_buf_get_mark(0, "<")[1]
 		-- 		local b = vim.fn.getpos("'>")[2]
 		-- 		for line = a, b do
-		-- 			al.msg(line .. ' ')
 		-- 			toggle_line(line)
 		-- 		end
 	end
 end
 
-vim.keymap.set('n', 'gc', function() replace_text('n', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
-vim.keymap.set('x', 'gc', function() replace_text('v', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
-vim.keymap.set('n', 'g,', function() replace_text('%s,') end)
+C = vim.api.nvim_buf_get_option(0, 'commentstring')
+vim.keymap.set('v', 'gc', function () vim.cmd([[:'<,'>echo "hello"<CR>]]) end)-- [[:!dots tool replace-lines ]] .. C, false) end)
 
+-- vim.keymap.set('n', 'gc', function() replace_text('n', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
+-- vim.keymap.set('x', 'gc', function() replace_text('v', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
+-- vim.keymap.set('n', 'g,', function() replace_text('%s,') end)
 
 -- file/buffer modifications
 vim.keymap.set('n', '<leader>w', ':w<CR>')

@@ -1,6 +1,6 @@
 -- lsp config --
 
-local lsp = require('lspconfig')
+local lspconf = require('lspconfig')
 local cmp = require('cmp')
 
 cmp.setup {
@@ -31,33 +31,18 @@ cmp.setup {
 
 local cap = require('cmp_nvim_lsp').default_capabilities()
 
-lsp.lua_ls.setup {
-	settings = {
-		Lua = { diagnostics = { globals = { 'vim', 'al' } } }
-	},
-	capabilities = cap
+local servers = {
+	'lua_ls',
+	'pyright',
+	'clangd',
+	'gopls',
+	'html',
+	'htmx',
+	'zls',
 }
 
-lsp.pyright.setup {
-	capabilities = cap
-}
-
-lsp.clangd.setup {
-	capabilities = cap
-}
-
-lsp.gopls.setup {
-	capabilities = cap
-}
-
-lsp.html.setup {
-	capabilities = cap
-}
-
-lsp.htmx.setup {
-	capabilities = cap
-}
-
-lsp.zls.setup {
-	capabilities = cap
-}
+for _, server in ipairs(servers) do
+	lspconf[server].setup {
+		capabilities = cap,
+	}
+end

@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # usage:
 #	dots tool cht s -- open last cheatsheet
 #	dots tool cht -- find and open cheatshhet

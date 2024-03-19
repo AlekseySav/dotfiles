@@ -5,25 +5,20 @@ require('lazy').setup {
 	{
 		'navarasu/onedark.nvim',
 		priority = 1000,
-		opts = { --[[ style = 'cool' ]] }
+		opts = {}
 	},
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
-	},
-	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000
-	},
-
-	-- lua line --
 	{
 		'nvim-lualine/lualine.nvim',
-		opts = {},
-		dependencies = { 'nvim-tree/nvim-web-devicons' }
+		dependencies = {
+			'nvim-tree/nvim-web-devicons',
+		},
+		opts = {
+			setup = function()
+				require('lualine').setup({
+					lualine_y = {}
+				})
+			end
+		},
 	},
 
 	-- file navigation --
@@ -31,7 +26,8 @@ require('lazy').setup {
 		'nvim-telescope/telescope.nvim', tag = '0.1.5',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		opts = {
-			pickers = { find_files = { hidden = true } }
+			pickers = { find_files = { hidden = true } },
+			progress = { suppress_on_insert = false, },
 		}
 	},
 	'ThePrimeagen/harpoon',
@@ -43,34 +39,37 @@ require('lazy').setup {
 			notification = { window = { y_padding = 2 } },
 		},
 		config = function()
-			al.msg = function(msg)
+			require('fidget').setup({})
+			_G.info = function(msg)
 				require('fidget').notify(msg)
 			end
 		end
 	},
 
-	-- syntax hl --
+	-- treesitter --
 	{
 		'nvim-treesitter/nvim-treesitter',
 		build = ':TSUpdate',
 		opts = {
-			ensure_installed = { 'c', 'lua', 'cpp', 'dot', 'go', 'java', 'python', 'json', 'javascript' },
+			ensure_installed = { 'c', 'lua', 'cpp', 'zig', 'dot', 'go', 'java', 'python', 'json', 'javascript' },
 			sync_install = true
 		}
 	},
+
+	-- lsp --
 	{
-		'williamboman/mason-lspconfig.nvim',
-		opts = { automatic_installation = true },
+		'neovim/nvim-lspconfig',
 		dependencies = {
+			{ 'folke/neodev.nvim', opts = {} },
+			{ 'williamboman/mason.nvim', opts = {} },
 			{
-				'neovim/nvim-lspconfig',
-			},
-			{
-				'williamboman/mason.nvim',
-				opts = {},
+				'williamboman/mason-lspconfig.nvim',
+				opts = { automatic_installation = true },
 			},
 		},
 	},
+
+	-- code completion --
 	{
 		'hrsh7th/nvim-cmp',
 		dependencies = {
@@ -81,5 +80,8 @@ require('lazy').setup {
 			'L3MON4D3/LuaSnip',
 			'saadparwaiz1/cmp_luasnip'
 		},
-	}
+	},
+	{
+		'JoosepAlviste/nvim-ts-context-commentstring',
+	},
 }
