@@ -11,7 +11,7 @@ backup() {
 	done
 }
 
-install() {
+setup() {
 	backup
 	for config in $configs; do
 		rm -rf "$HOME/.config/$config"
@@ -44,7 +44,7 @@ shift 1
 
 case $action in
 	backup) backup "$@";;
-	install) install "$@";;
+	setup) setup "$@";;
 	update) $HOME/.dotfiles/bin/dots tool dots-setup "$@";;
 	info) info "$@";;
 	save-info) info "$@" >$path/info.yaml;;

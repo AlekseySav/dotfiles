@@ -23,6 +23,7 @@
 
 ### setup
 - install brew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-- install dots: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/AlekseySav/dotfiles/main/tools/dots-setup.sh)"`
+- clone dots: `git clone git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
+- add bash config .profile: `source ~/.dotfiles/config/bash/profile.sh`
+- setup dots: `dots setup`
 - install core tools: `dots tool install-coretools`
-- install configs: `dots install`
