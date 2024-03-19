@@ -2,12 +2,18 @@
 brew install coreutils
 brew install fzf
 brew install jq
-brew install ripgrep
 brew install tree
 
-# install dev tools
+# install nvim & deps
 brew install neovim
+brew install ripgrep
+brew install npm
+brew install go
+
+# install tmux
 brew install tmux
+
+# install zoxide
 brew install zoxide
 
 # install languages
