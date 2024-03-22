@@ -44,6 +44,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end
 })
 
+-- nodes
+vim.keymap.set('n', '<leader>an', function ()
+	local name = vim.fn.input("Name: ", "", "file")
+	vim.fn.feedkeys('Go[[' .. name .. ']]')
+	vim.schedule(function() vim.cmd.stopinsert() vim.cmd('e ' .. name .. '.md') end)
+end)
+
 -- motions
 vim.keymap.set('n', '<C-D>', '<C-D>zz')
 vim.keymap.set('n', '<C-U>', '<C-U>zz')

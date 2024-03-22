@@ -39,6 +39,7 @@ local servers = {
 	'html',
 	'htmx',
 	'zls',
+	'marksman',
 }
 
 for _, server in ipairs(servers) do
