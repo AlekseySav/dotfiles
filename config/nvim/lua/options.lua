@@ -16,4 +16,4 @@ vim.g.netrw_banner = 0
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 vim.opt.showmode = false
-vim.opt.showcmd = false
+vim.opt.showcmd = true
