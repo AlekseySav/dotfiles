@@ -81,6 +81,20 @@ vim.keymap.set('n', '<leader>gs', function()
 	info("switched to source: " .. filename)
 end)
 
+-- go header
+vim.keymap.set('n', '<leader>gh', function()
+	local filename = vim.fn.expand('%')
+	if filename:sub(-2) ~= ".c" then
+		filename = filename:sub(0, -3) .. ".h"
+	elseif filename:sub(-4) ~= ".cpp" then
+		filename = filename:sub(0, -5) .. ".h"
+	else
+		return
+	end
+	vim.cmd('e ' .. filename)
+	info("switched to header: " .. filename)
+end)
+
 -- add note
 vim.keymap.set('n', '<leader>an', function ()
 	local name = vim.fn.input("Name: ", "", "file")
