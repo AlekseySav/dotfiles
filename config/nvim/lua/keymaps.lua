@@ -49,7 +49,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.keymap.set({"i", "s"}, "<C-L>", function() require('luasnip').jump( 1) end, {silent = true})
 vim.keymap.set({"i", "s"}, "<C-J>", function() require('luasnip').jump(-1) end, {silent = true})
 
-
 -- motions
 vim.keymap.set('n', '<C-D>', '<C-D>zz')
 vim.keymap.set('n', '<C-U>', '<C-U>zz')
@@ -95,6 +94,17 @@ vim.keymap.set('n', '<leader>gh', function()
 	info("switched to header: " .. filename)
 end)
 
+-- go proto
+vim.keymap.set('n', '<leader>gp', function()
+	local filename = vim.fn.expand('%')
+	if filename:sub(-5) ~= ".pb.h" then
+		return
+	end
+	filename = filename:sub(0, -6) .. ".proto"
+	vim.cmd('e ' .. filename)
+	info("switched to header: " .. filename)
+end)
+
 -- add note
 vim.keymap.set('n', '<leader>an', function ()
 	local name = vim.fn.input("Name: ", "", "file")
@@ -104,7 +114,6 @@ end)
 
 -- file/buffer modifications
 vim.keymap.set('n', '<leader>w', ':w<CR>')
-vim.keymap.set('n', '<leader>q', ':q<CR>')
 vim.keymap.set('n', '<leader>x', ':!chmod +x %<CR><Enter>')
 
 -- auto commands
