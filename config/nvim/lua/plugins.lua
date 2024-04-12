@@ -13,11 +13,10 @@ require('lazy').setup {
 			'nvim-tree/nvim-web-devicons',
 		},
 		opts = {
-			setup = function()
-				require('lualine').setup({
-					lualine_y = {}
-				})
-			end
+			sections = {
+				lualine_c = { { 'filename', path = 1 } },
+				lualine_y = {},
+			}
 		},
 	},
 

@@ -12,6 +12,7 @@ vim.keymap.set('n', '<leader>ff', telescope.find_files)
 vim.keymap.set('n', '<leader>fg', telescope.live_grep)
 vim.keymap.set('n', '<leader>fh', telescope.help_tags)
 vim.keymap.set('n', '<leader>fd', function() telescope.find_files({ cwd = require('telescope.utils').buffer_dir() }) end)
+vim.keymap.set('n', '<leader>gd', function() telescope.live_grep({ cwd = require('telescope.utils').buffer_dir() }) end)
 
 -- harpoon
 vim.keymap.set('n', '<leader>a', require('harpoon.mark').add_file)
@@ -44,12 +45,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end
 })
 
--- nodes
-vim.keymap.set('n', '<leader>an', function ()
-	local name = vim.fn.input("Name: ", "", "file")
-	vim.fn.feedkeys('Go[[' .. name .. ']]')
-	vim.schedule(function() vim.cmd.stopinsert() vim.cmd('e ' .. name .. '.md') end)
-end)
+-- cmp
+vim.keymap.set({"i", "s"}, "<C-L>", function() require('luasnip').jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-J>", function() require('luasnip').jump(-1) end, {silent = true})
+
 
 -- motions
 vim.keymap.set('n', '<C-D>', '<C-D>zz')
@@ -57,7 +56,7 @@ vim.keymap.set('n', '<C-U>', '<C-U>zz')
 vim.keymap.set('n', '{', '{zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '<C-k>', 'ddkP')
-vim.keymap.set('n', '<C-j>', 'ddjP')
+vim.keymap.set('n', '<C-j>', 'ddp')
 vim.keymap.set('x', '<C-k>', 'dkP`[V`]')
 vim.keymap.set('x', '<C-j>', 'djP`[V`]')
 vim.keymap.set('i', '<C-c>', '<C-[>')
@@ -66,39 +65,28 @@ vim.keymap.set('n', 'gY', '"gY')
 vim.keymap.set('n', 'gyy', '"gyy')
 vim.keymap.set('v', 'gp', '"gp')
 
--- completion, generation, etc.
-local function replace_text(mode, fmt)
-	local toggle_line = function(line)
-		local str = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-		local match = '^' .. fmt:gsub('%%s', '(.*)') .. '$'
-		if str:match(match) then
-			local _, _, v = str:find(match)
-			str = v
-		else
-			str = string.format(fmt, str)
-		end
-		vim.api.nvim_buf_set_lines(0, line - 1, line, true, { str })
-	end
-	if mode == 'n' then
-		local line = vim.api.nvim_win_get_cursor(0)[1]
-		toggle_line(line)
-	else
-		vim.fn.feedkeys('VVV')
-		vim.cmd('sleep')
-		-- local a = vim.api.nvim_buf_get_mark(0, "<")[1]
-		-- 		local b = vim.fn.getpos("'>")[2]
-		-- 		for line = a, b do
-		-- 			toggle_line(line)
-		-- 		end
-	end
-end
+vim.keymap.set('n', '<leader>dc', 'Vap:g/^\\s*\\/\\/.*$/d<CR>')
 
-C = vim.api.nvim_buf_get_option(0, 'commentstring')
-vim.keymap.set('v', 'gc', function () vim.cmd([[:'<,'>echo "hello"<CR>]]) end)-- [[:!dots tool replace-lines ]] .. C, false) end)
+-- go source
+vim.keymap.set('n', '<leader>gs', function()
+	local filename = vim.fn.expand('%')
+	if filename:sub(-2) ~= ".h" then
+		return
+	end
+	filename = filename:sub(0, -3) .. ".c"
+	if vim.fn.filereadable(filename) == 0 then
+		filename = filename:sub(0, -3) .. ".cpp"
+	end
+	vim.cmd('e ' .. filename)
+	info("switched to source: " .. filename)
+end)
 
--- vim.keymap.set('n', 'gc', function() replace_text('n', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
--- vim.keymap.set('x', 'gc', function() replace_text('v', vim.api.nvim_buf_get_option(0, 'commentstring')) end)
--- vim.keymap.set('n', 'g,', function() replace_text('%s,') end)
+-- add note
+vim.keymap.set('n', '<leader>an', function ()
+	local name = vim.fn.input("Name: ", "", "file")
+	vim.fn.feedkeys('Go[[' .. name .. ']]')
+	vim.schedule(function() vim.cmd.stopinsert() vim.cmd('e ' .. name .. '.md') end)
+end)
 
 -- file/buffer modifications
 vim.keymap.set('n', '<leader>w', ':w<CR>')
