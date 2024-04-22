@@ -16,11 +16,5 @@
 
 ### code organization:
 - `config/` &mdash; each config is linked to `~/.config/$name`
-- `tools/` &mdash; small scripts, are accessed by `dots tool` command
-- `dots.sh` &mdash; dotfiles manager, is linked to `/usr/local/bin/dots`
-
-### dots
-- `dots backup` &mdash; copy all managed dotfiles to `~/.dotfiles/.data/backup/`
-- `dots install` &mdash; link all managed dotfiles to this repo
-- `dots update` &mdash; fetch configs from remote repository
-- `dots tool <cmd> [args...]` &mdash; run tool from `~/.dotfiles/tools/`
+- `tools/` &mdash; small scripts, are accessed by `dots` command
+- `bin/dots` &mdash; dotfiles manager

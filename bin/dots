@@ -1,32 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-path="$HOME/.dotfiles/"
-configs="$(ls $path/config)"
+if [[ $1 == tool ]]; then
+	shift 1
+fi
 
-backup() {
-	rm -rf "$path/.data/backup/config"
-	mkdir -p "$path/.data/backup/config"
-	for config in $configs; do
-		cp -r "$HOME/.config/$config" "$path/.data/backup/config/$config"
-	done
-}
-
-setup() {
-	backup
-	for config in $configs; do
-		rm -rf "$HOME/.config/$config"
-		ln -s "$path/config/$config" "$HOME/.config/$config"
-		echo linking $config... >&2
-	done
-}
-
-action=$1
-shift 1
-
-case $action in
-	backup) backup "$@";;
-	setup) setup "$@";;
-	update) $HOME/.dotfiles/bin/dots tool dots-setup "$@";;
-	tool) /bin/bash $path/tools/$1.sh "${@:2}";;
-	*) echo "bad action" >&2;;
-esac
+/bin/bash $HOME/.dotfiles/tools/$1.sh "${@:2}"
