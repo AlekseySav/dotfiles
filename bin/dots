@@ -20,25 +20,6 @@ setup() {
 	done
 }
 
-info() {
-	echo "configs:"
-	for config in $configs; do
-		echo "  - $config"
-	done
-	echo
-
-	echo "brew packages:"
-	for pachage in $(brew leaves); do
-		echo "  - $pachage"
-	done
-	echo
-
-	echo "mason.nvim packages:"
-	for pachage in $(ls "$HOME/.local/share/nvim/mason/packages/"); do
-		echo "  - $pachage"
-	done
-}
-
 action=$1
 shift 1
 
@@ -46,8 +27,6 @@ case $action in
 	backup) backup "$@";;
 	setup) setup "$@";;
 	update) $HOME/.dotfiles/bin/dots tool dots-setup "$@";;
-	info) info "$@";;
-	save-info) info "$@" >$path/info.yaml;;
 	tool) /bin/bash $path/tools/$1.sh "${@:2}";;
 	*) echo "bad action" >&2;;
 esac
