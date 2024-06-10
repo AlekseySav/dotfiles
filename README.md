@@ -1,18 +1,18 @@
 ## my dotfiles
 
+- `zsh` with `zinit` for plugins
 - `tmux` with `tpm` for plugins
 - `nvim` with `lazy` for plugins and `mason` for lsp and dap
 
 ### setup
 - clone repo: `git clone git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- add bash config (`$HOME/.dotfiles/config/bash/profile.sh`) to profile
+- add bash config (`$HOME/.dotfiles/config/zsh/profile.zsh`) to profile
 - run setup: `dots setup`
 
 ### prerequisites
 
-- `nvim`, `ripgrep`, `fzf`, `tmux`, `zoxide` have to be installed
+- `zsh`, `nvim`, `ripgrep`, `fzf`, `tmux`, `zoxide` have to be installed
 - if `brew` is found, it will be used to install them, so it is prefered
-- only `bash` is supported
 
 ### code organization:
 - `config/` &mdash; each config is linked to `~/.config/$name`
