@@ -1,0 +1,14 @@
+window:
+  startup_mode: Fullscreen
+
+font:
+  size: 16
+  normal:
+    family: "ComicShannsMono Nerd Font Mono"
+    style: "Regular"
+  italic:
+    family: "ComicShannsMono Nerd Font Mono"
+    style: "Regular"
+  bold:
+    family: "ComicShannsMono Nerd Font Mono"
+    style: "Bold"
