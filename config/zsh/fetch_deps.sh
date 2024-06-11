@@ -5,6 +5,12 @@ fetch() {
 	fi
 }
 
+evalfile() {
+	if [ -f $1 ]; then
+		eval "$($@)"
+	fi
+}
+
 # install zsh
 ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
 fetch https://github.com/zdharma-continuum/zinit.git $ZINIT_HOME
@@ -14,7 +20,5 @@ source "$ZINIT_HOME/zinit.zsh"
 fetch https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
 
 # source brew
-BREW_HOME="/home/linuxbrew/.linuxbrew/bin/brew"
-if [ -f $BREW_HOME ]; then
-	eval "$($BREW_HOME shellenv)"
-fi
+evalfile /home/linuxbrew/.linuxbrew/bin/brew shellenv
+evalfile /opt/homebrew/bin/brew shellenv
