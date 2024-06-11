@@ -13,11 +13,12 @@
 - `ripgrep`
 
 ### setup
-- clone repo: `git clone git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- add bash config (`$HOME/.dotfiles/config/zsh/profile.zsh`) to profile
-- run setup: `dots setup`
+
+- `git clone git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
+- install font from `assets/...`
+- `echo "$HOME/.dotfiles/config/zsh/profile.zsh" >>.zshrc`
 
 ### code organization:
 - `config/` &mdash; each config is linked to `~/.config/$name`
 - `tools/` &mdash; small scripts, are accessed by `dots` command
-- `bin/dots` &mdash; dotfiles manager
+- `bin/dots` &mdash; dotfiles runner

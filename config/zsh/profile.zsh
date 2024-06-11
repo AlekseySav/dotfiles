@@ -17,6 +17,8 @@ bindkey -e
 bindkey '^ ' autosuggest-accept
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
+bindkey '^w' forward-word
+bindkey '^b' backward-word
 
 # aliases
 alias ls='ls --color'
@@ -39,3 +41,4 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_save_no_dups
 setopt hist_find_no_dups
+setopt hist_ignore_space
