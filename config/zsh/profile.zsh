@@ -26,7 +26,7 @@ alias nv=nvim
 alias la="ls -a --color=auto"
 
 # shell integration
-if [[ $(command -v fzf) ]] -a [[ $(fzf --help | grep zsh) ]]; then
+if [[ $(command -v fzf) ]] && [[ $(fzf --help | grep zsh) ]]; then
 	eval "$(fzf --zsh)"
 fi
 if [[ $(command -v zoxide) ]]; then
