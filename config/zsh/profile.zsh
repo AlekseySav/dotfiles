@@ -26,8 +26,12 @@ alias nv=nvim
 alias la="ls -a --color=auto"
 
 # shell integration
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+if [[ $(command -v fzf) ]]; then
+	eval "$(fzf --zsh)"
+fi
+if [[ $(command -v zoxide) ]]; then
+	eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # history
 HISTSIZE=5000
