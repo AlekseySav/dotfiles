@@ -18,12 +18,12 @@ linkconf() {
 	fi
 }
 
-# install zsh
-ZINIT_HOME="$HOME/.local/share/zinit/zinit.git"
+# fetch zinit
+ZINIT_HOME="$HOME/.local/share/zinit"
 fetch https://github.com/zdharma-continuum/zinit.git $ZINIT_HOME
 source "$ZINIT_HOME/zinit.zsh"
 
-# install tpm
+# fetch tpm
 fetch https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
 
 # source brew
@@ -34,6 +34,14 @@ evalfile /opt/homebrew/bin/brew shellenv
 linkconf alacritty
 linkconf tmux
 linkconf nvim
+
+# shell integration
+if [[ $(command -v fzf) ]] && [[ $(fzf --help | grep zsh) ]]; then
+	eval "$(fzf --zsh)"
+fi
+if [[ $(command -v zoxide) ]]; then
+	eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # link dots tool
 PATH="$PATH:$HOME/.dotfiles/bin/"
