@@ -15,9 +15,9 @@
 ### setup
 
 - `git clone --recurse-submodules git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- `echo "$HOME/.dotfiles/config/zsh/profile.zsh" >>.zshrc`
+- `echo "$HOME/.dotfiles/config/zsh/profile.zsh" >>~/.zshrc`
 
-#### for `alacritty`
+#### for alacritty:
 
 - install font from `assets/...`
 
