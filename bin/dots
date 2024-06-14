@@ -1,7 +1,2 @@
 #!/bin/bash
-
-if [[ $1 == tool ]]; then
-	shift 1
-fi
-
 /bin/bash $HOME/.dotfiles/tools/$1.sh "${@:2}"

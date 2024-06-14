@@ -1,6 +1,6 @@
 ## my dotfiles
 
-### core tools
+### core tools & plugin managers
 
 - `zsh` with `zinit`
 - `tmux` with `tpm`
@@ -8,17 +8,20 @@
 
 ### dependencies
 
-- `zsh`, `tmux`, `nvim`
-- `fzf`, `zoxide`
-- `ripgrep`
+- `zsh`, `tmux`, `nvim`, `fzf`
+- `brew`, `alacritty`, `zoxide` (optional)
+- `ripgrep` (optional, for `telescope.nvim livegrep`)
 
 ### setup
 
-- `git clone git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- install font from `assets/...`
+- `git clone --recurse-submodules git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
 - `echo "$HOME/.dotfiles/config/zsh/profile.zsh" >>.zshrc`
+
+#### for `alacritty`
+
+- install font from `assets/...`
 
 ### code organization:
 - `config/` &mdash; each config is linked to `~/.config/$name`
-- `tools/` &mdash; small scripts, are accessed by `dots` command
+- `tools/` &mdash; small scripts, run by `bin/dots`
 - `bin/dots` &mdash; dotfiles runner
