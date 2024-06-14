@@ -20,8 +20,3 @@
 #### for alacritty:
 
 - install font from `assets/...`
-
-### code organization:
-- `config/` &mdash; each config is linked to `~/.config/$name`
-- `tools/` &mdash; small scripts, run by `bin/dots`
-- `bin/dots` &mdash; dotfiles runner

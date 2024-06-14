@@ -44,4 +44,4 @@ if [[ $(command -v zoxide) ]]; then
 fi
 
 # link dots tool
-PATH="$PATH:$HOME/.dotfiles/bin/"
+PATH="$PATH:$HOME/.dotfiles/tools/bin/"
