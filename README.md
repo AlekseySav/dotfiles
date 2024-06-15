@@ -10,12 +10,12 @@
 
 - `zsh`, `tmux`, `nvim`, `fzf`
 - `brew`, `alacritty`, `zoxide` (optional)
-- `ripgrep` (optional, for `telescope.nvim livegrep`)
+- `ripgrep` (optional, for `telescope.nvim:livegrep`)
 
 ### setup
 
 - `git clone --recurse-submodules git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- `echo "$HOME/.dotfiles/config/zsh/profile.zsh" >>~/.zshrc`
+- `echo 'source "$HOME/.dotfiles/config/zsh/profile.zsh"' >>~/.zshrc`
 
 #### for alacritty:
 
