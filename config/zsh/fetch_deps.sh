@@ -45,3 +45,6 @@ fi
 
 # link dots tool
 PATH="$PATH:$HOME/.dotfiles/tools/bin/"
+
+# create state path
+mkdir -p $HOME/.local/state/dotfiles

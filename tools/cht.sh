@@ -1,11 +1,12 @@
 # usage:
-#	dots tool cht s -- open last cheatsheet
 #	dots tool cht -- find and open cheatshhet
 #			q to exit
 #			<C-c> to retry
 
+cht_path="$HOME/.local/state/dotfiles/chtsh"
+
 show() {
-	cat "$HOME/.dotfiles/.data/cache/chtsh" | less -K -r
+	cat "$cht_path" | less -K -r
 	return $?
 }
 
@@ -23,19 +24,12 @@ run() {
 	echo -n "question: "
 	read question
 	question=$(echo "$question" | tr ' ' '+')
-
-	mkdir -p "$HOME/.dotfiles/.data/cache"
-	curl -s cht.sh/$topic/$question >"$HOME/.dotfiles/.data/cache/chtsh"
+	curl -s cht.sh/$topic/$question >"$cht_path"
 	show
 	if [ $? -ne 0 ]; then
 		run
 	fi
 }
-
-if [[ $1 == "s" ]]; then
-	show
-	exit
-fi
 
 options=$(curl -s cht.sh/:list)
 topics=$(echo "$options" | cut -d'/' -f1)
@@ -43,5 +37,4 @@ topic=$(choose "$topics")
 if [ $? -ne 0 ]; then
 	exit
 fi
-
 run
