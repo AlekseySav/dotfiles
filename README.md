@@ -8,9 +8,7 @@
 
 ### dependencies
 
-- `zsh`, `tmux`, `nvim`, `fzf`
-- `brew`, `alacritty`, `zoxide` (optional)
-- `ripgrep` (optional, for `telescope.nvim:livegrep`)
+- run `dots resolve-deps`
 
 ### setup
 
