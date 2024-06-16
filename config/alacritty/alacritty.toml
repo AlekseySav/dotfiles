@@ -1,8 +1,12 @@
+import = [
+  "~/.config/alacritty/onedark.toml"
+]
+
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 18
+size = 20
 
 [font.bold]
 family = "ComicMono Nerd Font"
