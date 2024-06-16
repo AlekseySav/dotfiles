@@ -18,8 +18,6 @@ return {
 		{ 'williamboman/mason-lspconfig.nvim', opts = {} },
 	},
 	config = function ()
-		print('lsp')
-		require('cmp')
 		local lspconf = require('lspconfig')
 		local cap = require('cmp_nvim_lsp').default_capabilities()
 		for _, server in ipairs(servers) do

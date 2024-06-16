@@ -7,6 +7,7 @@ vim.keymap.set('n', '<leader>nn', function() info('hello') end)
 
 -- oil
 vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- telescope
 local telescope = require('telescope.builtin')
