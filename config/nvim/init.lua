@@ -14,7 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('options')
-require('plugins')
-require('lspconf')
+require('lazy').setup('plugins')
 require('keymaps')
 require('onedark').load()
