@@ -18,6 +18,10 @@ linkconf() {
 	fi
 }
 
+# create paths
+mkdir -p $HOME/.local/state/dotfiles
+mkdir -p $HOME/.local/bin
+
 # fetch zinit
 ZINIT_HOME="$HOME/.local/share/zinit"
 fetch https://github.com/zdharma-continuum/zinit.git $ZINIT_HOME
@@ -42,9 +46,9 @@ fi
 if [[ $(command -v zoxide) ]]; then
 	eval "$(zoxide init --cmd cd zsh)"
 fi
+if [[ $(command -v oh-my-posh) ]]; then
+	eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/config/ohmyposh/config.toml)"
+fi
 
 # link dots tool
 PATH="$PATH:$HOME/.dotfiles/tools/bin/"
-
-# create state path
-mkdir -p $HOME/.local/state/dotfiles

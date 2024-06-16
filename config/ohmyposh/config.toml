@@ -1,0 +1,65 @@
+version = 2
+final_space = true
+
+# path, git branch
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'blue'
+    background = 'transparent'
+    template = '{{ .Path }}'
+
+    [blocks.segments.properties]
+      style = 'full'
+
+    [[blocks.segments]]
+      type = 'command'
+      style = 'plain'
+      foreground = 'darkGray'
+      background = 'transparent'
+
+      [blocks.segments.properties]
+        shell = 'bash'
+        command = 'dots branch'
+
+# execution time
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+
+# prompts
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground = 'magenta'
+    background = 'transparent'
+    foreground_templates = ['{{if ne .Code 0}}red{{end}}']
+    template = '❯'
+
+[transient_prompt]
+  foreground = 'magenta'
+  background = 'transparent'
+  foreground_templates = ['{{if ne .Code 0}}red{{end}}']
+  template = '❯ '
+
+[secondary_prompt]
+  foreground = 'magenta'
+  background = 'transparent'
+  template = '.. '
