@@ -47,7 +47,7 @@ fi
 if [[ $(command -v zoxide) ]]; then
 	eval "$(zoxide init --cmd cd zsh)"
 fi
-if [[ $(command -v oh-my-posh) ]]; then
+if [[ $(command -v oh-my-posh) ]] && [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
 	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 fi
 
