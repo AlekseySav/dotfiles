@@ -38,6 +38,7 @@ evalfile /opt/homebrew/bin/brew shellenv
 linkconf alacritty
 linkconf tmux
 linkconf nvim
+linkconf ohmyposh
 
 # shell integration
 if [[ $(command -v fzf) ]] && [[ $(fzf --help | grep zsh) ]]; then
@@ -47,7 +48,7 @@ if [[ $(command -v zoxide) ]]; then
 	eval "$(zoxide init --cmd cd zsh)"
 fi
 if [[ $(command -v oh-my-posh) ]]; then
-	eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/config/ohmyposh/config.toml)"
+	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 fi
 
 # link dots tool
