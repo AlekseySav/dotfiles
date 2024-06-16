@@ -1,5 +1,3 @@
--- all options go here --
-
 vim.g.mapleader = ' '
 
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
@@ -15,3 +13,8 @@ vim.opt.incsearch = true
 
 vim.opt.showmode = false
 vim.opt.showcmd = true
+
+vim.opt.listchars = {
+	tab = '→ ',
+	trail = "-",
+}
