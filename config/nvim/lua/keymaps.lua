@@ -1,10 +1,12 @@
 -- all remaps are stored here --
 
 vim.keymap.set('n', '<leader>lz', ':Lazy<CR>')
-vim.keymap.set('n', '<leader>e', ':Ex<CR>')
 vim.keymap.set('n', '<leader>so', ':w<CR>:source<CR>')
 vim.keymap.set('x', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>nn', function() info('hello') end)
+
+-- oil
+vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- telescope
 local telescope = require('telescope.builtin')
