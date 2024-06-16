@@ -1,0 +1,21 @@
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 18
+
+[font.bold]
+family = "ComicMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "ComicMono Nerd Font"
+style = "Regular"
+
+[font.normal]
+family = "ComicMono Nerd Font"
+style = "Regular"
+
+[window]
+startup_mode = "Maximized"
+decorations = "None"
