@@ -8,12 +8,13 @@ vim.keymap.set('n', '<leader>tf', function() vim.opt.list = false end)
 vim.keymap.set('n', '<leader>tt', function() vim.opt.list = true end)
 
 -- oil
-vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>')
-vim.keymap.set('n', '-', '<CMD>Oil<CR>')
+vim.keymap.set('n', '<leader>e', vim.cmd.Oil)
+vim.keymap.set('n', '-', vim.cmd.Oil)
 
 -- telescope
 local telescope = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', telescope.find_files)
+vim.keymap.set('n', '<leader>fb', telescope.buffers)
 vim.keymap.set('n', '<leader>fg', telescope.live_grep)
 vim.keymap.set('n', '<leader>fh', telescope.help_tags)
 vim.keymap.set('n', '<leader>fd', function() telescope.find_files({ cwd = require('telescope.utils').buffer_dir() }) end)
@@ -71,44 +72,15 @@ vim.keymap.set('v', 'gp', '"gp')
 
 vim.keymap.set('n', '<leader>dc', 'Vap:g/^\\s*\\/\\/.*$/d<CR>')
 
--- go source
-vim.keymap.set('n', '<leader>gs', function()
-	local filename = vim.fn.expand('%')
-	if filename:sub(-2) ~= ".h" then
-		return
-	end
-	filename = filename:sub(0, -3) .. ".c"
-	if vim.fn.filereadable(filename) == 0 then
-		filename = filename:sub(0, -3) .. ".cpp"
-	end
-	vim.cmd('e ' .. filename)
-	info("switched to source: " .. filename)
-end)
-
--- go header
-vim.keymap.set('n', '<leader>gh', function()
-	local filename = vim.fn.expand('%')
-	if filename:sub(-2) == ".c" then
-		filename = filename:sub(0, -3) .. ".h"
-	elseif filename:sub(-4) == ".cpp" then
-		filename = filename:sub(0, -5) .. ".h"
-	else
-		return
-	end
-	vim.cmd('e ' .. filename)
-	info("switched to header: " .. filename)
-end)
-
--- go proto
-vim.keymap.set('n', '<leader>gp', function()
-	local filename = vim.fn.expand('%')
-	if filename:sub(-5) ~= ".pb.h" then
-		return
-	end
-	filename = filename:sub(0, -6) .. ".proto"
-	vim.cmd('e ' .. filename)
-	info("switched to header: " .. filename)
-end)
+vim.keymap.set('n', '<leader>gs', require('gosource').change_extension({
+	{ '.proto', '.pb.h' },
+	{ '.pb.h', '.proto' },
+	{ '.pb.cc', '.proto' },
+	{ '.h', '.c', },
+	{ '.c', '.h' },
+	{ '.h', '.cpp' },
+	{ '.cpp', '.h' },
+}))
 
 -- add note
 vim.keymap.set('n', '<leader>an', function ()
@@ -120,14 +92,3 @@ end)
 -- file/buffer modifications
 vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>x', ':!chmod +x %<CR><Enter>')
-
--- auto commands
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-	pattern = { '*' },
-	command = [[%s/\s\+$//e]]
-})
-
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-	pattern = { '*.go' },
-	command = [[lua vim.lsp.buf.format()]]
-})

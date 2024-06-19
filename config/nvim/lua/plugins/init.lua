@@ -5,4 +5,5 @@ return {
 		opts = {}
 	},
 	'ThePrimeagen/harpoon',
+	'alekseysav/gosource.nvim',
 }
