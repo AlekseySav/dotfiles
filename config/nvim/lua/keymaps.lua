@@ -70,16 +70,20 @@ vim.keymap.set('n', 'gY', '"gY')
 vim.keymap.set('n', 'gyy', '"gyy')
 vim.keymap.set('v', 'gp', '"gp')
 
+-- folds
+vim.keymap.set('n', '<leader>fo', ':foldopen<CR>')
+vim.keymap.set('n', '<leader>fc', ':foldclose<CR>')
+
 vim.keymap.set('n', '<leader>dc', 'Vap:g/^\\s*\\/\\/.*$/d<CR>')
 
 vim.keymap.set('n', '<leader>gs', require('gosource').change_extension({
 	{ '.proto', '.pb.h' },
 	{ '.pb.h', '.proto' },
 	{ '.pb.cc', '.proto' },
+	{ '.h', '.cpp', create = true },
+	{ '.cpp', '.h' },
 	{ '.h', '.c', },
 	{ '.c', '.h' },
-	{ '.h', '.cpp' },
-	{ '.cpp', '.h' },
 }))
 
 -- add note

@@ -13,8 +13,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('options')
+vim.g.mapleader = ' '
+
 require('lazy').setup('plugins')
-require('keymaps')
+require('options')
 require('autocmd')
-require('onedark').load()
+require('keymaps')

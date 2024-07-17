@@ -1,5 +1,3 @@
-vim.g.mapleader = ' '
-
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 vim.opt.tabstop = 4
