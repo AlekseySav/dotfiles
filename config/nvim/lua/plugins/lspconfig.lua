@@ -8,6 +8,7 @@ local servers = {
 	'zls',
 	'marksman',
 	'bashls',
+	'yamlls',
 }
 
 return {
