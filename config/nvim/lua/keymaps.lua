@@ -69,6 +69,7 @@ vim.keymap.set('v', 'gy', '"gy')
 vim.keymap.set('n', 'gY', '"gY')
 vim.keymap.set('n', 'gyy', '"gyy')
 vim.keymap.set('v', 'gp', '"gp')
+vim.keymap.set('n', '<leader>da', ':%s/$A\\//<CR>')
 
 -- folds
 vim.keymap.set('n', '<leader>fo', ':foldopen<CR>')
