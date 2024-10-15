@@ -18,14 +18,10 @@ final_space = true
       style = 'full'
 
     [[blocks.segments]]
-      type = 'command'
+      type = 'git'
       style = 'plain'
       foreground = 'darkGray'
       background = 'transparent'
-
-      [blocks.segments.properties]
-        shell = 'bash'
-        command = 'dots branch'
 
 # execution time
 [[blocks]]
