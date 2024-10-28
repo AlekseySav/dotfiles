@@ -14,7 +14,7 @@ for config in $(ls config); do
 	for file in $(cd config && find $config -type f); do
 		echo $file
 		mkdir -p $(dirname $HOME/.config/$file)
-		hooks/addvars.sh local.init var.ini <config/$file >$HOME/.config/$file
+		hooks/addvars.sh local.ini var.ini <config/$file >$HOME/.config/$file
 	done
 done
 
