@@ -9,7 +9,7 @@
 ### setup
 
 - `git clone --recurse-submodules git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`
-- `echo 'source "$HOME/.dotfiles/config/zsh/profile.zsh"' >>~/.zshrc`
+- `~/.dotfiles/hooks/install.sh`
 
 #### for alacritty:
 
