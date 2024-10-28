@@ -1,6 +1,6 @@
 # zshell config
 
-source $HOME/.dotfiles/config/zsh/fetch_deps.sh
+source $HOME/.config/zsh/fetch_deps.sh
 
 # zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -32,6 +32,13 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^w' forward-word
 bindkey '^b' backward-word
+
+# shell integration
+for config in $(ls $HOME/.config); do
+	if [[ $(command -v $config) ]] && [ -f $HOME/.config/$config/init.sh ]; then
+		source $HOME/.config/$config/init.sh
+	fi
+done
 
 # aliases
 alias ls='ls --color=auto'

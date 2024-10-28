@@ -1,7 +1,7 @@
 #!/bin/bash
 # usage: addvars <config.ini>... <input >output
 
-while read -r line; do
+while IFS='' read -r line; do
 	for config in "$@"; do
 		if [ -f $config ]; then
 			section=""
@@ -14,7 +14,7 @@ while read -r line; do
 					continue
 				fi
 				name=$(echo $arg | cut -d= -f1)
-				value=$(echo $arg | cut -d= -f2)
+				value=$(echo $arg | cut -d= -f2 | sed 's/\([\\/&]\)/\\\1/g')
 				line="$(echo "$line" | sed "s/\\\${$section$name}/$value/g")"
 			done <$config
 		fi

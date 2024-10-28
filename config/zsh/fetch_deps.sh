@@ -11,9 +11,9 @@ evalfile() {
 	fi
 }
 
-# create paths
-mkdir -p $HOME/.local/state/dotfiles
-mkdir -p $HOME/.local/bin
+if [ -f ${brew.path} ]; then
+	eval "$(${brew.path} shellenv)"
+fi
 
 # fetch zinit
 ZINIT_HOME="$HOME/.local/share/zinit"
@@ -22,21 +22,6 @@ source "$ZINIT_HOME/zinit.zsh"
 
 # fetch tpm
 fetch https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
-
-# source brew
-evalfile /home/linuxbrew/.linuxbrew/bin/brew shellenv
-evalfile /opt/homebrew/bin/brew shellenv
-
-# shell integration
-if [[ $(command -v fzf) ]] && [[ $(fzf --help | grep zsh) ]]; then
-	eval "$(fzf --zsh)"
-fi
-if [[ $(command -v zoxide) ]]; then
-	eval "$(zoxide init --cmd cd zsh)"
-fi
-if [[ $(command -v oh-my-posh) ]] && [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
-fi
 
 # link dots tool
 PATH="$PATH:$HOME/.dotfiles/tools/bin/"

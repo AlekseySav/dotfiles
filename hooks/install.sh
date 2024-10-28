@@ -18,4 +18,6 @@ for config in $(ls config); do
 	done
 done
 
-echo 'source "$HOME/.dotfiles/config/zsh/profile.zsh"' >>~/.zshrc
+if ! grep 'source "$HOME/.config/zsh/profile.zsh"' <~/.zshrc; then
+	echo 'source "$HOME/.config/zsh/profile.zsh"' >>~/.zshrc
+fi
