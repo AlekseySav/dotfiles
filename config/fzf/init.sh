@@ -1,3 +1,1 @@
-if [[ $(command -v fzf) ]]; then
-	eval "$(fzf --zsh)"
-fi
+eval "$(fzf --zsh)"
