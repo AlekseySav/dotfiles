@@ -32,6 +32,14 @@ return {
 					else
 						cmp.confirm { select = true }
 					end
+				end,
+
+				['<C-f>'] = function()
+					if not cmp.visible() then
+						cmp.complete()
+					else
+						cmp.confirm { select = true }
+					end
 				end
 			})
 		}
