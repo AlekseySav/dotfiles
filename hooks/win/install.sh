@@ -32,6 +32,6 @@ for file in "$imports"; do
 done
 echo "]">>$ALACRITTY/alacritty.toml
 echo "[shell]">>$ALACRITTY/alacritty.toml
-echo "program = \"$1\\scripts\\alacritty.bat\"" | sed 's/[\\]/\\\\/g' >>$ALACRITTY/alacritty.toml
+echo "program = \"$1\\scripts\\wsl.bat\"" | sed 's/[\\]/\\\\/g' >>$ALACRITTY/alacritty.toml
 p $DOTS/config/alacritty/alacritty.toml | yj -ty | yq 'del(.import)' | yj -yt >>$ALACRITTY/alacritty.toml
 sed -i 's/$/\r/' $ALACRITTY/alacritty.toml

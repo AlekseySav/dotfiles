@@ -40,4 +40,5 @@ bindkey '^b' backward-word
 # aliases
 alias ls='ls --color=auto'
 alias nv=nvim
-alias la="ls -a --color=auto"
+alias la='ls -a --color=auto'
+alias ta='tmux a || tmux new'

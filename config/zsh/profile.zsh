@@ -1,5 +1,3 @@
-# zshell config
-
 # init brew
 if [ -f ${brew.path} ]; then
 	eval "$(${brew.path} shellenv)"

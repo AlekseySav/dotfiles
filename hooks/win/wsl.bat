@@ -4,4 +4,4 @@ if !%distro%! == !u24!	set distro=Ubuntu-24.04
 if !%distro%! == !u18!	set distro=Ubuntu-18.04
 @echo Running WSL with %distro%
 
-@C:\\Windows\\System32\\wsl.exe ~ -d %distro% -e ${brew.path} -c "${tmux.path} a || ${tmux.path} new"
+@C:\\Windows\\System32\\wsl.exe ~ -d %distro% -e ${zsh.path}
