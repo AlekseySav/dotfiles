@@ -6,10 +6,6 @@
 - `tmux` with `tpm`
 - `nvim` with `lazy.nvim` and `mason.nvim`
 
-### dependencies
-
-- run `dots resolve-deps`
-
 ### setup
 
 - `git clone --recurse-submodules git@github.com:AlekseySav/dotfiles.git ~/.dotfiles`

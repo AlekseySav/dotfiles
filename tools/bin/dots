@@ -1,2 +1,0 @@
-#!/bin/bash
-/bin/bash $HOME/.dotfiles/tools/$1.sh "${@:2}"
