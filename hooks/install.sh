@@ -28,6 +28,6 @@ for config in $(ls config); do
 	fi
 done
 
-if ! grep 'source "$HOME/.config/zsh/profile.zsh"' <~/.zshrc; then
+if [ ! -f '$HOME/.zshrc' ] || ! grep 'source "$HOME/.config/zsh/profile.zsh"' <~/.zshrc; then
 	echo 'source "$HOME/.config/zsh/profile.zsh"' >>~/.zshrc
 fi
