@@ -1,10 +1,14 @@
 source "$HOME/.local/share/zinit/zinit.zsh"
 
 # zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
+zinit ice wait lucid
+zinit load zsh-users/zsh-syntax-highlighting
+zinit ice wait lucid
+zinit load zsh-users/zsh-completions
+zinit ice wait lucid
+zinit load zsh-users/zsh-autosuggestions
+zinit ice wait lucid
+zinit load Aloxaf/fzf-tab
 
 # history
 HISTSIZE=5000
