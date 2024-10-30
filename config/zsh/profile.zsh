@@ -4,8 +4,8 @@ if [ -f ${brew.path} ]; then
 fi
 
 # init all tools
-for config in $(ls $HOME/.config); do
-	if [[ $(command -v $config) ]] && [ -f $HOME/.config/$config/init.sh ]; then
+for config in ${general.configs}; do
+	if [ -f $HOME/.config/$config/init.zsh ]; then
 		source $HOME/.config/$config/init.zsh
 	fi
 done
