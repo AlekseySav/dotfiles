@@ -7,15 +7,25 @@ fi
 cd $HOME/.dotfiles
 
 for config in $(ls config); do
-	echo copying $config...
+	echo installing $config...
 	if [ -d $HOME/.config/$config ]; then
-		rm -rf $HOME/.config/$config
+		if [[ config/$config -nt $HOME/.config/$config ]]; then
+			rm -rf $HOME/.config/$config
+		else
+			echo up to date
+			continue
+		fi
 	fi
 	for file in $(cd config && find $config -type f); do
 		echo $file
 		mkdir -p $(dirname $HOME/.config/$file)
 		hooks/addvars.sh local.ini var.ini <config/$file >$HOME/.config/$file
+		chmod --reference=config/$file $HOME/.config/$file
 	done
+	if [ -f $HOME/.config/$config/update.sh ]; then
+		echo running $config update
+		$HOME/.config/$config/update.sh
+	fi
 done
 
 if ! grep 'source "$HOME/.config/zsh/profile.zsh"' <~/.zshrc; then

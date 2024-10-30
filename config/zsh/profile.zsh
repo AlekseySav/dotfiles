@@ -6,6 +6,6 @@ fi
 # init all tools
 for config in $(ls $HOME/.config); do
 	if [[ $(command -v $config) ]] && [ -f $HOME/.config/$config/init.sh ]; then
-		source $HOME/.config/$config/init.sh
+		source $HOME/.config/$config/init.zsh
 	fi
 done
