@@ -52,8 +52,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- cmp
-vim.keymap.set({"i", "s"}, "<C-L>", function() require('luasnip').jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() require('luasnip').jump(-1) end, {silent = true})
+vim.keymap.set({ "i", "s" }, "<C-L>", function() require('luasnip').jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-J>", function() require('luasnip').jump(-1) end, { silent = true })
 
 -- motions
 vim.keymap.set('n', '<C-D>', '<C-D>zz')
@@ -78,19 +78,22 @@ vim.keymap.set('n', '<leader>dc', 'Vap:g/^\\s*\\/\\/.*$/d<CR>')
 
 vim.keymap.set('n', '<leader>gs', require('gosource').change_extension({
 	{ '.proto', '.pb.h' },
-	{ '.pb.h', '.proto' },
+	{ '.pb.h',  '.proto' },
 	{ '.pb.cc', '.proto' },
-	{ '.h', '.cpp', create = true },
-	{ '.cpp', '.h' },
-	{ '.h', '.c', },
-	{ '.c', '.h' },
+	{ '.h',     '.cpp',  create = true },
+	{ '.cpp',   '.h' },
+	{ '.h',     '.c', },
+	{ '.c',     '.h' },
 }))
 
 -- add note
-vim.keymap.set('n', '<leader>an', function ()
+vim.keymap.set('n', '<leader>an', function()
 	local name = vim.fn.input("Name: ", "", "file")
 	vim.fn.feedkeys('Go[[' .. name .. ']]')
-	vim.schedule(function() vim.cmd.stopinsert() vim.cmd('e ' .. name .. '.md') end)
+	vim.schedule(function()
+		vim.cmd.stopinsert()
+		vim.cmd('e ' .. name .. '.md')
+	end)
 end)
 
 -- file/buffer modifications

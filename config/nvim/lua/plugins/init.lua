@@ -2,7 +2,7 @@ return {
 	{
 		'navarasu/onedark.nvim',
 		priority = 1000,
-		config = function ()
+		config = function()
 			require('onedark').load()
 		end
 	},

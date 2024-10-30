@@ -8,7 +8,7 @@ return {
 		'L3MON4D3/LuaSnip',
 		'saadparwaiz1/cmp_luasnip'
 	},
-	config = function ()
+	config = function()
 		local cmp = require('cmp')
 		cmp.setup {
 			snippet = {
@@ -17,14 +17,14 @@ return {
 				end,
 			},
 			sources = cmp.config.sources(
-			{
-				{ name = 'nvim_lsp' },
-				{ name = 'luasnip' }
-			},
-			{
-				{ name = 'buffer' },
-				{ name = 'path' },
-			}),
+				{
+					{ name = 'nvim_lsp' },
+					{ name = 'luasnip' }
+				},
+				{
+					{ name = 'buffer' },
+					{ name = 'path' },
+				}),
 			mapping = cmp.mapping.preset.insert({
 				['<C-Space>'] = function()
 					if not cmp.visible() then

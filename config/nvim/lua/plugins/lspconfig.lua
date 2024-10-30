@@ -14,11 +14,11 @@ local servers = {
 return {
 	'neovim/nvim-lspconfig',
 	dependencies = {
-		{ 'folke/neodev.nvim', opts = {} },
-		{ 'williamboman/mason.nvim', opts = {} },
+		{ 'folke/neodev.nvim',                 opts = {} },
+		{ 'williamboman/mason.nvim',           opts = {} },
 		{ 'williamboman/mason-lspconfig.nvim', opts = {} },
 	},
-	config = function ()
+	config = function()
 		local lspconf = require('lspconfig')
 		local cap = require('cmp_nvim_lsp').default_capabilities()
 		for _, server in ipairs(servers) do
