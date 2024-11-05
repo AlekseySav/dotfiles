@@ -8,24 +8,25 @@ cd $HOME/.dotfiles
 
 for config in $(ls config); do
 	echo installing $config...
+	mkdir .backup
 	if [ -d $HOME/.config/$config ]; then
-		if [[ config/$config -nt $HOME/.config/$config ]]; then
-			rm -rf $HOME/.config/$config
-		else
-			echo up to date
-			continue
-		fi
+		mv $HOME/.config/$config .backup
 	fi
 	for file in $(cd config && find $config -type f); do
-		echo $file
 		mkdir -p $(dirname $HOME/.config/$file)
-		hooks/addvars.sh local.ini var.ini <config/$file >$HOME/.config/$file
+		if [ ! -f .backup/$file ] || [[ config/$file -nt .backup/$file ]]; then
+			echo "$file"
+			hooks/addvars.sh local.ini var.ini <config/$file >$HOME/.config/$file
+		else
+			ln .backup/$file $HOME/.config/$file
+		fi
 		chmod --reference=config/$file $HOME/.config/$file
 	done
 	if [ -f $HOME/.config/$config/update.sh ]; then
 		echo running $config update
 		$HOME/.config/$config/update.sh
 	fi
+	rm -rf .backup
 done
 
 if [ ! -f "$HOME/.zshrc" ] || ! grep 'source "$HOME/.config/zsh/profile.zsh"' <"$HOME/.zshrc"; then
