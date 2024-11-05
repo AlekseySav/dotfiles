@@ -1,16 +1,3 @@
-local servers = {
-	'lua_ls',
-	'pyright',
-	'clangd',
-	'gopls',
-	'html',
-	'htmx',
-	'zls',
-	'marksman',
-	'bashls',
-	'yamlls',
-}
-
 return {
 	'neovim/nvim-lspconfig',
 	dependencies = {
@@ -19,10 +6,11 @@ return {
 		{ 'williamboman/mason-lspconfig.nvim', opts = {} },
 	},
 	config = function()
-		local lspconf = require('lspconfig')
 		local cap = require('cmp_nvim_lsp').default_capabilities()
-		for _, server in ipairs(servers) do
-			lspconf[server].setup { capabilities = cap }
-		end
+		require('mason-lspconfig').setup_handlers {
+			function(server)
+				require('lspconfig')[server].setup { capabilities = cap }
+			end
+		}
 	end
 }
