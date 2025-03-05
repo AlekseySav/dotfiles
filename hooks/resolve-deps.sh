@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # check all dependencies
 
 check() {
