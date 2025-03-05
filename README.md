@@ -13,4 +13,4 @@
 
 #### for alacritty:
 
-- install font from `assets/...`
+- install font from `submodules/ComicMonoNF`
