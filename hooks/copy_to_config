@@ -1,0 +1,85 @@
+#!/usr/bin/env zsh
+# usage: hooks/copy_to_config [--reset] [FILE...]
+# --reset	delete previous configs for new files & update .zshrc
+# FILE		filename relative to $HOME/.dotfiles/config
+
+# parse .ini var files add print vars
+addvars() {
+	section=""
+	while IFS='' read line; do
+		if [[ "$line" == "" || "${line:0:1}" == ";" || "${line:0:1}" == "#" ]]; then
+			continue
+		fi
+		if [[ "${line:0:1}" == "[" ]]; then
+			section="$(echo "$line" | cut -c2- | rev | cut -c2- | rev)"
+			continue
+		fi
+		echo "vars[$section.$(echo "$line" | cut -d= -f1)]=\"$(echo "$line" | cut -d= -f2)\""
+	done
+}
+
+# apply vars to config
+process() {
+	cat "$1" >"$datapath/tmpbuf"
+	for key in $(cat "$1" | grep -o "\${[^}]\+}" | tr -d "\${}"); do
+		val="$(echo ${vars[$key]} | sed 's/\//\\\//g')"
+		if [[ "$val" == "" ]]; then
+			echo "Bad keyword in $1: <$key>"
+			exit 1
+		fi
+		sed -i "s/\${$key}/$val/g" "$datapath/tmpbuf"
+	done
+	cat "$datapath/tmpbuf"
+	rm "$datapath/tmpbuf"
+}
+
+# copy file to config
+copy() {
+	src="$HOME/.dotfiles/config/$1"
+	dst="$(readlink -f $HOME/.config/$1)"
+	echo "$f"
+	if [ ! -f "$src" ]; then
+		echo "Bad filename: $1"
+		exit 1
+	fi
+	mkdir -p $(dirname "$dst")
+	if [[ $(grep "$dst" "$datapath/managed_files" 2>/dev/null) == "" ]]; then
+		echo "$dst" >>"$datapath/managed_files"
+	fi
+	process "$src" >"$dst"
+	chmod --reference="$src" "$dst"
+}
+
+# read variables
+varfiles=($HOME/.dotfiles/var.ini $HOME/.dotfiles/local.ini)
+datapath="$HOME/.dotfiles/.data"
+mkdir -p "$datapath"
+typeset -A vars
+for f in $varfiles; do
+	if [ -f "$f" ]; then
+		eval "$(addvars <"$f")"
+	fi
+done
+
+if [[ $1 == "--reset" ]]; then
+	while read file; do
+		rm -f "$file"
+	done <"$datapath/managed_files"
+	rm "$datapath/managed_files"
+
+	if [ ! -f "$HOME/.zshrc" ] || [[ $(grep 'source "$HOME/.config/zsh/profile.zsh"' "$HOME/.zshrc") == "" ]]; then
+		echo "updating ~/.zshrc" >&2
+		echo 'source "$HOME/.config/zsh/profile.zsh"' >>~/.zshrc
+	fi
+	shift 1
+fi
+
+if [[ $# != 0 ]]; then
+	for f in "$@"; do
+		copy "$f"
+	done
+else
+	for f in $(cd "$HOME/.dotfiles/config/"; find . -type f); do
+		copy "$f"
+	done
+fi
