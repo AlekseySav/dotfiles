@@ -1,21 +1,33 @@
 #!/usr/bin/env zsh
-# usage: hooks/copy_to_config [--reset] [FILE...]
-# --reset	delete previous configs for new files & update .zshrc
-# FILE		filename relative to $HOME/.dotfiles/config
+# usage: hooks/copy_to_config [--resolve VAR] | [--reset] [FILE...]
+# --resolve VAR print value of variable
+# --reset		delete previous configs for new files & update .zshrc
+# FILE			filename relative to $HOME/.dotfiles/config
 
 # parse .ini var files add print vars
 addvars() {
 	section=""
+	keys=""
 	while IFS='' read line; do
 		if [[ "$line" == "" || "${line:0:1}" == ";" || "${line:0:1}" == "#" ]]; then
 			continue
 		fi
 		if [[ "${line:0:1}" == "[" ]]; then
+			if [[ "$section" != "" ]]; then
+				echo "vars[$section]=\"${keys:1}\""
+			fi
+			keys=""
 			section="$(echo "$line" | cut -c2- | rev | cut -c2- | rev)"
 			continue
 		fi
-		echo "vars[$section.$(echo "$line" | cut -d= -f1)]=\"$(echo "$line" | cut -d= -f2)\""
+		key="$(echo "$line" | cut -d= -f1)"
+		val="$(echo "$line" | cut -d= -f2)"
+		keys="$keys $key"
+		echo "vars[$section.$key]=\"$val\""
 	done
+	if [[ "$section" != "" ]]; then
+		echo "vars[$section]=\"${keys:1}\""
+	fi
 }
 
 # apply vars to config
@@ -60,6 +72,11 @@ for f in $varfiles; do
 		eval "$(addvars <"$f")"
 	fi
 done
+
+if [[ $1 == "--resolve" ]]; then
+	echo ${vars[$2]}
+	exit
+fi
 
 if [[ $1 == "--reset" ]]; then
 	while read file; do

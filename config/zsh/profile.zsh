@@ -1,3 +1,13 @@
+# link submodules
+for f in ${repos}; do
+	dest="$HOME/$("$HOME/.dotfiles/hooks/copy_to_config" --resolve "repos.$f")"
+	if [ ! -d "$dest" ]; then
+		echo linking "$f"...
+		mkdir -p $(dirname "$dest")
+		ln -s "$HOME/.dotfiles/submodules/$f" "$dest"
+	fi
+done
+
 # init brew
 if [ -f ${brew.path} ]; then
 	eval "$(${brew.path} shellenv)"
