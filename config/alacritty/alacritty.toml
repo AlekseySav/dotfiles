@@ -3,6 +3,9 @@ import = [
   "~/.config/alacritty/onedark.toml"
 ]
 
+[terminal]
+shell = "${alacritty.shell}"
+
 [env]
 TERM = "xterm-256color"
 
