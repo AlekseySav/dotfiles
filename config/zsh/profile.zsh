@@ -1,6 +1,6 @@
 # link submodules
 for f in ${repos}; do
-	dest="$HOME/$("$HOME/.dotfiles/hooks/copy_to_config" --resolve "repos.$f")"
+	dest="$HOME/$(PATH="$PATH:$(readlink -f ${zsh.path}/..)" "$HOME/.dotfiles/hooks/copy_to_config" --resolve "repos.$f")"
 	if [ ! -d "$dest" ]; then
 		echo linking "$f"...
 		mkdir -p $(dirname "$dest")
