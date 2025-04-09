@@ -47,8 +47,8 @@ process() {
 
 # copy file to config
 copy() {
-	src="$HOME/.dotfiles/config/$1"
-	dst="$(readlink -f $HOME/.config/$1)"
+	src="$(readlink -m "$HOME/.dotfiles/config/$1")"
+	dst="$(readlink -m "$HOME/.config/$1")"
 	echo "$f"
 	if [ ! -f "$src" ]; then
 		echo "Bad filename: $1"
@@ -79,10 +79,12 @@ if [[ $1 == "--resolve" ]]; then
 fi
 
 if [[ $1 == "--reset" ]]; then
-	while read file; do
-		rm -f "$file"
-	done <"$datapath/managed_files"
-	rm "$datapath/managed_files"
+	if [ -f "$datapath/managed_files" ]; then
+		while read file; do
+			rm -f "$file"
+		done <"$datapath/managed_files"
+		rm "$datapath/managed_files"
+	fi
 
 	if [ ! -f "$HOME/.zshrc" ] || [[ $(grep 'source "$HOME/.config/zsh/profile.zsh"' "$HOME/.zshrc") == "" ]]; then
 		echo "updating ~/.zshrc" >&2
