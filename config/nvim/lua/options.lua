@@ -14,6 +14,8 @@ vim.opt.incsearch = true
 vim.opt.showmode = false
 vim.opt.showcmd = true
 
+vim.opt.signcolumn = 'auto:2'
+
 vim.opt.listchars = {
 	tab = '→ ',
 	trail = "-",
