@@ -6,6 +6,5 @@ return {
 			require('onedark').load()
 		end
 	},
-	'ThePrimeagen/harpoon',
 	'alekseysav/gosource.nvim',
 }

@@ -7,31 +7,6 @@ vim.keymap.set('n', '<leader>nn', function() info('hello') end)
 vim.keymap.set('n', '<leader>tf', function() vim.opt.list = false end)
 vim.keymap.set('n', '<leader>tt', function() vim.opt.list = true end)
 
--- oil
-vim.keymap.set('n', '<leader>e', vim.cmd.Oil)
-vim.keymap.set('n', '-', vim.cmd.Oil)
-
--- telescope
-local telescope = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', telescope.find_files)
-vim.keymap.set('n', '<leader>fb', telescope.buffers)
-vim.keymap.set('n', '<leader>fg', telescope.live_grep)
-vim.keymap.set('n', '<leader>fh', telescope.help_tags)
-vim.keymap.set('n', '<leader>fd', function() telescope.find_files({ cwd = require('telescope.utils').buffer_dir() }) end)
-vim.keymap.set('n', '<leader>gd', function() telescope.live_grep({ cwd = require('telescope.utils').buffer_dir() }) end)
-
--- harpoon
-vim.keymap.set('n', '<leader>a', require('harpoon.mark').add_file)
-vim.keymap.set('n', '<leader>hh', require('harpoon.ui').toggle_quick_menu)
-vim.keymap.set('n', '<leader>ht', function()
-	require('harpoon.term').gotoTerminal(1)
-	vim.fn.feedkeys('i')
-end)
-vim.keymap.set('t', '<C-Space>', '<C-\\><C-n>:b#<CR>')
-for i = 1, 9 do
-	vim.keymap.set('n', '<leader>' .. tostring(i), function() require('harpoon.ui').nav_file(i) end)
-end
-
 -- lsp
 vim.keymap.set('n', '<leader>m', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
