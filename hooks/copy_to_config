@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
-# usage: hooks/copy_to_config [--resolve VAR] | [--reset] [FILE...]
+# usage: hooks/copy_to_config [--resolve VAR] | [--reset] [[--from-stdin] FILE...]
 # --resolve VAR print value of variable
+# --from-stdin	use stdin instead of file data (file still should exist)
 # --reset		delete previous configs for new files & update .zshrc
 # FILE			filename relative to $HOME/.dotfiles/config
 
@@ -32,8 +33,13 @@ addvars() {
 
 # apply vars to config
 process() {
-	cat "$1" >"$datapath/tmpbuf"
-	for key in $(cat "$1" | grep -o "\${[^}]\+}" | tr -d "\${}"); do
+	if [[ "$1" == "--from-stdin" ]]; then
+		cat >"$datapath/tmpbuf.1"
+	else
+		cat "$2" >"$datapath/tmpbuf.1"
+	fi
+	cat "$datapath/tmpbuf.1" >"$datapath/tmpbuf"
+	for key in $(cat "$datapath/tmpbuf.1" | grep -o "\${[^}]\+}" | tr -d "\${}"); do
 		val="$(echo ${vars[$key]} | sed 's/\//\\\//g')"
 		if [[ "$val" == "" ]]; then
 			echo "Bad keyword in $1: <$key>"
@@ -47,18 +53,18 @@ process() {
 
 # copy file to config
 copy() {
-	src="$(readlink -m "$HOME/.dotfiles/config/$1")"
-	dst="$(readlink -m "$HOME/.config/$1")"
+	src="$(readlink -m "$HOME/.dotfiles/config/$2")"
+	dst="$(readlink -m "$HOME/.config/$2")"
 	echo "$f"
 	if [ ! -f "$src" ]; then
-		echo "Bad filename: $1"
+		echo "Bad filename: $2"
 		exit 1
 	fi
 	mkdir -p $(dirname "$dst")
 	if [[ $(grep "$dst" "$datapath/managed_files" 2>/dev/null) == "" ]]; then
 		echo "$dst" >>"$datapath/managed_files"
 	fi
-	process "$src" >"$dst"
+	process "$1" "$src" >"$dst"
 	chmod --reference="$src" "$dst"
 }
 
@@ -94,11 +100,17 @@ if [[ $1 == "--reset" ]]; then
 fi
 
 if [[ $# != 0 ]]; then
+	from_stdin=""
 	for f in "$@"; do
-		copy "$f"
+		if [[ "$f" == "--from-stdin" ]]; then
+			from_stdin="$f"
+			continue
+		fi
+		copy "$from_stdin" "$f"
+		from_stdin=""
 	done
 else
 	for f in $(cd "$HOME/.dotfiles/config/"; find . -type f); do
-		copy "$f"
+		copy "" "$f"
 	done
 fi
