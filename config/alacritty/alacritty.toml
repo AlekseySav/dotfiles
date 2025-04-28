@@ -27,3 +27,6 @@ style = "Regular"
 [window]
 startup_mode = "Maximized"
 decorations = "None"
+
+[keyboard]
+bindings = [{ key = "N", mods = "Control | Shift", action = "CreateNewWindow" }]
