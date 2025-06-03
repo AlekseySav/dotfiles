@@ -1,0 +1,128 @@
+#!/bin/bash
+
+default_output_directory="$HOME/.config"
+input_config="$HOME/.dotfiles/config"
+output_config="$default_output_directory"
+jinja_data="$HOME/.dotfiles/var.toml"
+resolve=()
+files=()
+verbose=false
+dry=false
+stdout=false
+all=false
+prune=false
+
+usage() {
+	echo -e "Usage: $0 [OPTION]... [FILE]..." >&2
+	echo -e "Insall dotfiles to config path" >&2
+	echo -e "" >&2
+	echo -e "  --all\t\t\tinstall all files from the input directory" >&2
+	echo -e "  -j, --jinja <FILE>\tspecify path to jinja data file" >&2
+	echo -e "  \t\t\tdefault: $jinja_data" >&2
+	echo -e "  -h, --help\t\tdisplay this help and exit" >&2
+	echo -e "  -n, --dry-run\t\tdo not modify the output directory" >&2
+	echo -e "  -o, --output <PATH>\tspecify output directory" >&2
+	echo -e "  \t\t\tdefault: $output_config" >&2
+	echo -e "  --prune-old\t\tdelete previous configs (ingnores output_directory)" >&2
+	echo -e "  -r, --resolve <VAR>\tprint value of VAR" >&2
+	echo -e "  -s, --source <PATH>\tspecify input directory, all file paths must be relative to it" >&2
+	echo -e "  \t\t\tdefault: $input_config" >&2
+	echo -e "  --stdout\t\tdisplay processed config files in stdout" >&2
+	echo -e "  -v, --verbose\t\tenable tracing" >&2
+}
+
+trace() {
+	if [[ $verbose == true ]]; then
+		echo -e "\e[034m[INFO]\e[0m\t$@" >&2
+	fi
+}
+
+die() {
+	echo -e "\e[031;1mError:\e[0m $@" >&2
+	exit 1
+}
+
+run() {
+	trace "Running '$@'"
+	eval "$@" || die "$@ failed"
+}
+
+render() {
+	if [[ $# -eq 0 ]]; then
+		file="$(run mktemp /tmp/dotfiles.XXXXXXXXXXXX)"
+		run cat >"$file"
+		run jinja2 --strict "$file" "$jinja_data"
+		run rm "$file"
+	else
+		run jinja2 --strict "$@" "$jinja_data"
+	fi
+}
+
+# parse arguments
+while [[ $# -gt 0 ]]; do
+	case $1 in
+		--all) all=true;;
+		-j|--jinja) jinja_data="$2"; shift 1;;
+		-h|--help) usage; exit 0;;
+		-n|--dry-run) dry=true;;
+		-o|--output) output_config="$2"; shift 1;;
+		--prune-old) prune=true;;
+		-r|--resolve) resolve=("${resolve[@]}" "$2"); shift 1;;
+		-s|--source) input_config="$2"; shift 1;;
+		--stdout) stdout=true;;
+		-v|--verbose) verbose=true;;
+		-*|--*) echo -e "Invalid option: $1\nTry '$0 --help' for more information" >&2; exit 1;;
+		*) files=("${files[@]}" "$1");;
+	esac
+	shift 1
+done
+
+[ -f "$jinja_data" ] && trace "Jinja data: '$jinja_data'" || die "Bad jinja data: '$jinja_data'";
+[ -d "$input_config" ] && trace "Input directory: '$input_config'" || die "Bad input directory: '$input_config'";
+[ -d "$output_config" ] && trace "Output directory: '$output_config'" || die "Bad output directory: '$output_config'";
+
+if [[ $all == true ]]; then
+	files=("${files[@]}" $(cd $input_config; run find . -type f))
+fi
+
+# resolving variables
+for var in "${resolve[@]}"; do
+	trace "Resolving variable: '$var'"
+	render <<<"$var"
+done
+
+# prune
+if [[ "$prune" == true ]]; then
+	prunes=$(render <<<"
+	{% for config in general.configs %} $default_output_directory/{{ config }} {% endfor %}
+	{% for repo in repos.values() %} $HOME/{{ repo }} {% endfor %}
+	")
+	for p in $prunes; do
+		echo "Removing $p..."
+		if [[ $dry == false ]]; then
+			run rm -rf "$p"
+		fi
+	done
+fi
+
+# process input files
+for file in "${files[@]}"; do
+	[ -f "$input_config/$file" ] && echo "$file..." || die "Bad input file: '$file'"
+	dst="$output_config/$file"
+	src="$(run mktemp /tmp/dotfiles.XXXXXXXXXXXX)"
+	if [[ "${file: -6}" == ".jinja" ]]; then
+		dst="${dst::-6}"
+		render "$input_config/$file" >>"$src"
+	else
+		run cat "$input_config/$file" >"$src"
+	fi
+	trace "Source file: '$src', destination: '$dst'"
+	if [[ $stdout == true ]]; then
+		run cat "$src"
+	fi
+	if [[ $dry == false ]]; then
+		run mkdir -p $(dirname "$dst")
+		run cp "$src" "$dst"
+	fi
+	run rm "$src"
+done

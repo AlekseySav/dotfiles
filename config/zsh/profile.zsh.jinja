@@ -1,0 +1,20 @@
+# link submodules
+{% for name, path in repos.items() %}
+if [ ! -d "{{ path }}" ]; then
+	echo linking "{{ name }}"...
+	mkdir -p $(dirname "$HOME/{{ path }}")
+	ln -s "$HOME/.dotfiles/submodules/{{ name }}" "$HOME/{{ path }}"
+fi
+{% endfor %}
+
+# init brew
+if [ -f "{{ brew.path }}" ]; then
+	eval "$({{ brew.path }} shellenv)"
+fi
+
+# init all tools
+{% for config in general.configs %}
+if [ -f "$HOME/.config/{{ config }}/init.zsh" ]; then
+	source "$HOME/.config/{{ config }}/init.zsh"
+fi
+{% endfor %}

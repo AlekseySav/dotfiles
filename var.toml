@@ -1,0 +1,16 @@
+[general]
+configs = ["alacritty", "fzf", "nvim", "oh-my-posh", "tmux", "zoxide", "zsh"]
+
+[repos]
+tpm = ".tmux/plugins/tpm"
+zinit = ".local/share/zinit"
+
+[alacritty]
+font_size = 20
+
+[shell]
+path = "/home/linuxbrew/.linuxbrew/bin/zsh"
+
+[brew]
+# path=/opt/homebrew/bin/brew for M1 mac
+path = "/home/linuxbrew/.linuxbrew/bin/brew"

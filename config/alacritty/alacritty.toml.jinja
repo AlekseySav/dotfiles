@@ -4,13 +4,13 @@ import = [
 ]
 
 [terminal]
-shell = "${alacritty.shell}"
+shell = "{{ shell.path }}"
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = ${alacritty.font_size}
+size = {{ alacritty.font_size }}
 
 [font.bold]
 family = "ComicMono Nerd Font"

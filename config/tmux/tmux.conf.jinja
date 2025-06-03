@@ -10,7 +10,7 @@ set -g default-terminal "tmux-256color"
 set-option -sa terminal-overrides "xterm-256color:Tc"
 
 # shell
-set-option -g default-shell "${zsh.path}"
+set-option -g default-shell "{{ shell.path }}"
 
 # plugins
 set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
@@ -34,5 +34,6 @@ set-option -g automatic-rename-format '#{b:pane_current_path}'
 # preconfigured sessions
 bind-key C-space new
 bind-key C-d source-file "$HOME/.config/tmux/sessions/dotfiles.tmux"
+bind-key C-w source-file "$HOME/.config/tmux/sessions/telcore.tmux"
 
-run "$HOME/${repos.tpm}/tpm"
+run "$HOME/{{ repos.tpm }}/tpm"
