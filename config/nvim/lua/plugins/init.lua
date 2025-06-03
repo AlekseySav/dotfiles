@@ -7,4 +7,9 @@ return {
 		end
 	},
 	'alekseysav/gosource.nvim',
+	{
+		"chentoast/marks.nvim",
+		event = "VeryLazy",
+		opts = {},
+	}
 }
