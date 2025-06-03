@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 })
 
 local config_path = os.getenv('HOME') .. '/.dotfiles/config'
-local copy_to_config_path = os.getenv('HOME') .. '/.dotfiles/hooks/copy_to_config'
+local copy_to_config_path = os.getenv('HOME') .. '/.dotfiles/hooks/copy-to-config'
 local Job = require('plenary.job')
 
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
@@ -24,8 +24,16 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 			local content = vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false)
 			Job:new({
 				command = copy_to_config_path,
-				args = { "--from-stdin", file:sub(#config_path + 2) },
+				args = { "--no-color", "--stdin", file:sub(#config_path + 2) },
 				writer = table.concat(content, '\n'),
+
+				on_stderr = function(_, data)
+					vim.schedule(function()
+						if data ~= nil then
+							info(data)
+						end
+					end)
+				end,
 
 				on_exit = function(_, return_val)
 					vim.schedule(function()

@@ -11,6 +11,11 @@ dry=false
 stdout=false
 all=false
 prune=false
+stdin=false
+
+error_color="\e[031;1m"
+info_color="\e[034m"
+no_color="\e[0m"
 
 usage() {
 	echo -e "Usage: $0 [OPTION]... [FILE]..." >&2
@@ -21,24 +26,26 @@ usage() {
 	echo -e "  \t\t\tdefault: $jinja_data" >&2
 	echo -e "  -h, --help\t\tdisplay this help and exit" >&2
 	echo -e "  -n, --dry-run\t\tdo not modify the output directory" >&2
+	echo -e "  --no-color\t\tdo not print colored output" >&2
 	echo -e "  -o, --output <PATH>\tspecify output directory" >&2
 	echo -e "  \t\t\tdefault: $output_config" >&2
 	echo -e "  --prune-old\t\tdelete previous configs (ingnores output_directory)" >&2
 	echo -e "  -r, --resolve <VAR>\tprint value of VAR" >&2
 	echo -e "  -s, --source <PATH>\tspecify input directory, all file paths must be relative to it" >&2
 	echo -e "  \t\t\tdefault: $input_config" >&2
+	echo -e "  --stdin\t\tignore contents of input files, use stdin instead" >&2
 	echo -e "  --stdout\t\tdisplay processed config files in stdout" >&2
 	echo -e "  -v, --verbose\t\tenable tracing" >&2
 }
 
 trace() {
 	if [[ $verbose == true ]]; then
-		echo -e "\e[034m[INFO]\e[0m\t$@" >&2
+		echo -e "$info_color[INFO]$no_color\t$@" >&2
 	fi
 }
 
 die() {
-	echo -e "\e[031;1mError:\e[0m $@" >&2
+	echo -e "$error_colorError:$no_color $@" >&2
 	exit 1
 }
 
@@ -65,10 +72,12 @@ while [[ $# -gt 0 ]]; do
 		-j|--jinja) jinja_data="$2"; shift 1;;
 		-h|--help) usage; exit 0;;
 		-n|--dry-run) dry=true;;
+		--no-color) info_color=""; error_color=""; no_color="";;
 		-o|--output) output_config="$2"; shift 1;;
 		--prune-old) prune=true;;
 		-r|--resolve) resolve=("${resolve[@]}" "$2"); shift 1;;
 		-s|--source) input_config="$2"; shift 1;;
+		--stdin) stdin=true;;
 		--stdout) stdout=true;;
 		-v|--verbose) verbose=true;;
 		-*|--*) echo -e "Invalid option: $1\nTry '$0 --help' for more information" >&2; exit 1;;
@@ -98,7 +107,7 @@ if [[ "$prune" == true ]]; then
 	{% for repo in repos.values() %} $HOME/{{ repo }} {% endfor %}
 	")
 	for p in $prunes; do
-		echo "Removing $p..."
+		echo "Removing $p..." >&2
 		if [[ $dry == false ]]; then
 			run rm -rf "$p"
 		fi
@@ -107,14 +116,22 @@ fi
 
 # process input files
 for file in "${files[@]}"; do
-	[ -f "$input_config/$file" ] && echo "$file..." || die "Bad input file: '$file'"
+	([[ "$stdin" == true ]] || [ -f "$input_config/$file" ]) && echo "$file..." >&2 || die "Bad input file: '$file'"
 	dst="$output_config/$file"
 	src="$(run mktemp /tmp/dotfiles.XXXXXXXXXXXX)"
 	if [[ "${file: -6}" == ".jinja" ]]; then
 		dst="${dst::-6}"
-		render "$input_config/$file" >>"$src"
+		if [[ $stdin == false ]]; then
+			render "$input_config/$file" >>"$src"
+		else
+			render >>"$src"
+		fi
 	else
-		run cat "$input_config/$file" >"$src"
+		if [[ $stdin == false ]]; then
+			run cat "$input_config/$file" >>"$src"
+		else
+			run cat >>"$src"
+		fi
 	fi
 	trace "Source file: '$src', destination: '$dst'"
 	if [[ $stdout == true ]]; then
