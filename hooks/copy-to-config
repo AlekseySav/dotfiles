@@ -45,7 +45,11 @@ trace() {
 }
 
 die() {
-	echo -e "$error_colorError:$no_color $@" >&2
+	echo -e "$error_color""Error:$no_color $@" >&2
+	for file in $(ls /tmp | grep '^dotfiles\..\{12\}$'); do
+		run rm "/tmp/$file"
+	done
+	trace Aborting...
 	exit 1
 }
 
@@ -103,13 +107,21 @@ done
 # prune
 if [[ "$prune" == true ]]; then
 	prunes=$(render <<<"
-	{% for config in general.configs %} $default_output_directory/{{ config }} {% endfor %}
-	{% for repo in repos.values() %} $HOME/{{ repo }} {% endfor %}
+	{% for name, config in get_context().items() %}
+		$default_output_directory/{{ name }}
+		{% if config.repos is defined %}
+			{% for repo in config.repos.values() %}
+				$HOME/{{ repo }}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
 	")
 	for p in $prunes; do
-		echo "Removing $p..." >&2
-		if [[ $dry == false ]]; then
-			run rm -rf "$p"
+		if [[ -d "$p" ]]; then
+			echo "Removing $p..." >&2
+			if [[ $dry == false ]]; then
+				run rm -r "$p"
+			fi
 		fi
 	done
 fi

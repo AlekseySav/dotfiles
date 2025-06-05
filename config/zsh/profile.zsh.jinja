@@ -1,20 +1,30 @@
 # link submodules
-{% for name, path in repos.items() %}
+{% for name, config in get_context().items() -%}
+{% if config.repos is defined -%}
+{% for name, path in config.repos.items() -%}
 if [ ! -d "{{ path }}" ]; then
 	echo linking "{{ name }}"...
 	mkdir -p $(dirname "$HOME/{{ path }}")
 	ln -s "$HOME/.dotfiles/submodules/{{ name }}" "$HOME/{{ path }}"
 fi
-{% endfor %}
+{% endfor -%}
+{% endif -%}
+{% endfor -%}
 
-# init brew
-if [ -f "{{ brew.path }}" ]; then
-	eval "$({{ brew.path }} shellenv)"
+# setup
+{% for name, config in get_context().items() -%}
+{% if config.setup is defined and config.path is defined -%}
+if [ -f {{ config.path }} ]; then
+	eval "$({{ config.setup }})"
 fi
+{% endif -%}
+{% endfor -%}
 
-# init all tools
-{% for config in general.configs %}
-if [ -f "$HOME/.config/{{ config }}/init.zsh" ]; then
-	source "$HOME/.config/{{ config }}/init.zsh"
+# init
+{% for name, config in get_context().items() -%}
+{% if config.init is defined -%}
+if command -v {{ name }} >/dev/null 2>&1; then
+	eval "$({{ config.init }})"
 fi
-{% endfor %}
+{% endif -%}
+{% endfor -%}

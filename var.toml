@@ -1,16 +1,26 @@
-[general]
-configs = ["alacritty", "fzf", "nvim", "oh-my-posh", "tmux", "zoxide", "zsh"]
-
-[repos]
-tpm = ".tmux/plugins/tpm"
+[zsh]
+path = "/home/linuxbrew/.linuxbrew/bin/zsh"
+setup = "cat $HOME/.config/zsh/init.zsh"
+[zsh.repos]
 zinit = ".local/share/zinit"
+
+[tmux]
+[tmux.repos]
+tpm = ".tmux/plugins/tpm"
 
 [alacritty]
 font_size = 20
 
-[shell]
-path = "/home/linuxbrew/.linuxbrew/bin/zsh"
-
 [brew]
 # path=/opt/homebrew/bin/brew for M1 mac
 path = "/home/linuxbrew/.linuxbrew/bin/brew"
+setup = "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+
+[fzf]
+init = "fzf --zsh"
+
+[oh-my-posh]
+init = "oh-my-posh init zsh -c $HOME/.config/oh-my-posh/config.toml"
+
+[zoxide]
+init = "zoxide init --cmd cd zsh"
