@@ -14,9 +14,9 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 	callback = function()
 		-- format file
-		-- if next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil then
-		-- 	vim.lsp.buf.format()
-		-- end
+		if next(vim.lsp.get_clients({ bufnr = 0 })) ~= nil then
+			vim.lsp.buf.format()
+		end
 
 		-- copy to config
 		local file = vim.fn.expand('%:p')

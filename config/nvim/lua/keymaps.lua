@@ -26,10 +26,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end
 })
 
--- cmp
-vim.keymap.set({ "i", "s" }, "<C-L>", function() require('luasnip').jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-J>", function() require('luasnip').jump(-1) end, { silent = true })
-
 -- motions
 vim.keymap.set('n', '<C-D>', '<C-D>zz')
 vim.keymap.set('n', '<C-U>', '<C-U>zz')
