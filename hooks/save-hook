@@ -1,0 +1,12 @@
+#!/bin/bash
+
+inotifywait -mr "$HOME/.dotfiles/config" -e close_write -e create --format "%w%f" |\
+while read file; do
+	if [ -d "$file" ]; then
+		echo "New directories inserted, restarting..."
+		exec "$HOME/.dotfiles/hooks/save-hook"
+	fi
+	if [ -f "$file" ]; then
+		$HOME/.dotfiles/hooks/copy-to-config "${file#$HOME/.dotfiles/config}"
+	fi
+done

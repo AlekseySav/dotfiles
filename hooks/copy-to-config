@@ -11,7 +11,6 @@ dry=false
 stdout=false
 all=false
 prune=false
-stdin=false
 
 error_color="\e[031;1m"
 info_color="\e[034m"
@@ -33,7 +32,6 @@ usage() {
 	echo -e "  -r, --resolve <VAR>\tprint value of VAR" >&2
 	echo -e "  -s, --source <PATH>\tspecify input directory, all file paths must be relative to it" >&2
 	echo -e "  \t\t\tdefault: $input_config" >&2
-	echo -e "  --stdin\t\tignore contents of input files, use stdin instead" >&2
 	echo -e "  --stdout\t\tdisplay processed config files in stdout" >&2
 	echo -e "  -v, --verbose\t\tenable tracing" >&2
 }
@@ -81,7 +79,6 @@ while [[ $# -gt 0 ]]; do
 		--prune-old) prune=true;;
 		-r|--resolve) resolve=("${resolve[@]}" "$2"); shift 1;;
 		-s|--source) input_config="$2"; shift 1;;
-		--stdin) stdin=true;;
 		--stdout) stdout=true;;
 		-v|--verbose) verbose=true;;
 		-*|--*) echo -e "Invalid option: $1\nTry '$0 --help' for more information" >&2; exit 1;;
@@ -128,22 +125,14 @@ fi
 
 # process input files
 for file in "${files[@]}"; do
-	([[ "$stdin" == true ]] || [ -f "$input_config/$file" ]) && echo "$file..." >&2 || die "Bad input file: '$file'"
+	[ -f "$input_config/$file" ] && echo "$file..." >&2 || die "Bad input file: '$file'"
 	dst="$output_config/$file"
 	src="$(run mktemp /tmp/dotfiles.XXXXXXXXXXXX)"
 	if [[ "${file: -6}" == ".jinja" ]]; then
 		dst="${dst::-6}"
-		if [[ $stdin == false ]]; then
-			render "$input_config/$file" >>"$src"
-		else
-			render >>"$src"
-		fi
+		render "$input_config/$file" >>"$src"
 	else
-		if [[ $stdin == false ]]; then
-			run cat "$input_config/$file" >>"$src"
-		else
-			run cat >>"$src"
-		fi
+		run cat "$input_config/$file" >>"$src"
 	fi
 	trace "Source file: '$src', destination: '$dst'"
 	if [[ $stdout == true ]]; then

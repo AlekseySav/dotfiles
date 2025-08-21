@@ -2,7 +2,7 @@
 {% for name, config in get_context().items() -%}
 {% if config.repos is defined -%}
 {% for name, path in config.repos.items() -%}
-if [ ! -d "{{ path }}" ]; then
+if [ ! -d "$HOME/{{ path }}" ]; then
 	echo linking "{{ name }}"...
 	mkdir -p $(dirname "$HOME/{{ path }}")
 	ln -s "$HOME/.dotfiles/submodules/{{ name }}" "$HOME/{{ path }}"

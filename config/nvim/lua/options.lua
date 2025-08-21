@@ -1,22 +1,15 @@
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.g.mapleader = ' '
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.wrap = false
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
 
-vim.opt.wrap = false
+vim.o.showmode = false
+vim.o.showcmd = true
 
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-
-vim.opt.showmode = false
-vim.opt.showcmd = true
-
-vim.opt.signcolumn = 'auto:2'
-
-vim.opt.listchars = {
-	tab = '→ ',
-	trail = "-",
-}
+vim.o.signcolumn = 'yes:1'

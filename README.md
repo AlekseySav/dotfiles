@@ -12,6 +12,10 @@
 - `~/.dotfiles/hooks/copy-to-config --all --prune-old`
 - `echo 'source "$HOME/.config/zsh/profile.zsh"' >>~/.zshrc`
 
+### auto-save config
+
+- `~/.dotfiles/hooks/save-hook`
+
 #### for alacritty:
 
 - install font from `submodules/ComicMonoNF`

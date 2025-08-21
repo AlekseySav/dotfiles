@@ -24,3 +24,5 @@ init = "oh-my-posh init zsh -c $HOME/.config/oh-my-posh/config.toml"
 
 [zoxide]
 init = "zoxide init --cmd cd zsh"
+
+[nvim]
