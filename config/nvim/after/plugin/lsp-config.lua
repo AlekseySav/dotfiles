@@ -1,3 +1,29 @@
+local lspconfigs = {
+	['clangd'] = {
+		filetypes = { 'c', 'cpp' },
+		cmd = {
+			'clangd',
+			'--header-insertion=never',
+			'--background-index',
+			'--pch-storage=memory',
+			'--header-insertion-decorators=false'
+		},
+	},
+	['rust-analyzer'] = {
+		cmd = { 'rust-analyzer', '+nightly' },
+	}
+}
+
+require('mason').setup()
+require('mason-lspconfig').setup()
+
+for _, server in ipairs(require('mason-lspconfig').get_installed_servers()) do
+	local opts = lspconfigs[server] or {}
+	opts.capabilities = require('blink.cmp').get_lsp_capabilities()
+	require('lspconfig')[server].setup(opts)
+end
+
+
 require('lazydev').setup({
 	library = {
 		{ path = '${3rd}/luv/library', words = { 'vim%.uv' } },

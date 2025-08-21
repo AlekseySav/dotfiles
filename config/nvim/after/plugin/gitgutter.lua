@@ -8,9 +8,9 @@ local function array2set(a)
 	return r
 end
 
-vim.g['gitgutter_sign_added'] = '┃'
-vim.g['gitgutter_sign_modified'] = '┃'
-vim.g['gitgutter_sign_removed'] = '┃'
+-- vim.g['gitgutter_sign_added'] = '┃'
+-- vim.g['gitgutter_sign_modified'] = '┃'
+-- vim.g['gitgutter_sign_removed'] = '┃'
 
 vim.keymap.set('n', '<leader>dif', function()
 	if #diff_buffers == 0 then
