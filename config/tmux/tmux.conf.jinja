@@ -34,5 +34,6 @@ set-option -g automatic-rename-format '#{b:pane_current_path}'
 # preconfigured sessions
 bind-key C-space new
 bind-key C-d source-file "$HOME/.config/tmux/sessions/dotfiles.tmux"
+bind-key j split-window -v "$HOME/.dotfiles/hooks/tmux-sessionizer"
 
 run "$HOME/{{ tmux.repos.tpm }}/tpm"

@@ -1,0 +1,4 @@
+~/src/*:src/%
+~/tmp/*:tmp/%
+~/src/Tel-core/*:Tel-core/%
+~/.dotfiles:dotfiles

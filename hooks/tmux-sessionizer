@@ -1,0 +1,82 @@
+#!/bin/bash
+# simple tmux sessionizer
+
+ACTIVE_HINT="\e[032mA\e[0m"
+OPEN_HINT="\e[033mO\e[0m"
+DEFAULT_HINT="\e[037m-\e[0m"
+config="$HOME/.config/tmux-sessionizer/sessions"
+
+list_sessions() {
+	while read line; do
+		glob="$(echo "$line" | cut -d: -f1)"
+		name="$(echo "$line" | cut -d: -f2)"
+		if [[ "${glob:0:1}" == "~" ]]; then
+			glob="${glob/#\~/$HOME}"
+		fi
+		for path in $(compgen -G "$glob"); do
+			if [ -d "$path" ]; then
+				base=$(basename "$path")
+				n="${name//%/$base}"
+				echo "$n $path"
+			fi
+		done
+	done <"$config"
+}
+
+usage() {
+	echo -e "Usage: $0 [OPTION]..." >&2
+	echo -e "Switch between tmux sessions" >&2
+	echo -e "" >&2
+	echo -e "  --no-color\t\tdosable colorized output" >&2
+}
+
+run_fzf() {
+	fzf -i --info=inline --with-nth=1,2 --nth=2 --ansi
+}
+
+set_state() {
+	current_session=$(tmux display-message -p '#S')
+	if [ -n "$TMUX" ]; then
+		echo -e "$ACTIVE_HINT $current_session -"
+	fi
+
+	opened_sessions="$(tmux list-sessions | cut -d: -f1)"
+	while read session; do
+		if [[ "$session" != "$current_session" ]] || [ ! -n "$TMUX" ]; then
+			echo -e "$OPEN_HINT $(echo $session | cut -d: -f1) -"
+		fi
+	done <<<"$opened_sessions"
+
+	while read line; do
+		session=$(echo $line | cut -d' ' -f1)
+		if ! echo "$opened_sessions" | grep -xF "$session" >/dev/null; then
+			echo -e "$DEFAULT_HINT $line"
+		fi
+	done
+}
+
+die() {
+	echo $@ >&2
+	exit 1
+}
+
+command -v fzf >/dev/null || die "fzf not found"
+command -v tmux >/dev/null || die "tmux not found"
+
+session=$(list_sessions | set_state | run_fzf)
+if [[ "$session" == "" ]]; then
+	exit 0
+fi
+
+name=$(echo $session | cut -d' ' -f2)
+path=$(echo $session | cut -d' ' -f3)
+if ! tmux has-session -t "$name" 2>/dev/null; then
+	echo "Creating session with name $name, path $path"
+	TMUX= tmux new -s "$name" -c "$path" -d
+fi
+
+if [ -n "$TMUX" ]; then
+	tmux switch-client -t "$name"
+else
+	tmux attach -t "$name"
+fi
