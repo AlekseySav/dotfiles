@@ -1,3 +1,6 @@
+pid=$$
+tty=$(tty)
+
 exit_insert_mode() {
 	zvm_exit_insert_mode false
 	zvm_reset_prompt
@@ -8,14 +11,18 @@ exit_visual_mode() {
 	zvm_reset_prompt
 }
 
+exit_normal_mode() {
+	zvm_enter_insert_mode
+	stty -F $tty intr ^C
+	kill -s SIGINT $pid
+}
+
 remap_c() {
-	stty intr undef
-	zvm_bindkey viins '^c' exit_insert_mode
-	zvm_bindkey visual '^c' exit_visual_mode
+	stty -F $tty intr undef
 }
 
 reset_c() {
-	stty intr ^C
+	stty -F $tty intr ^C
 }
 
 precmd_functions+=(remap_c)
@@ -27,6 +34,10 @@ zvm_config() {
 	ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_NEX
 	zvm_define_widget exit_insert_mode
 	zvm_define_widget exit_visual_mode
+	zvm_define_widget exit_normal_mode
+	zvm_bindkey viins '^c' exit_insert_mode
+	zvm_bindkey visual '^c' exit_visual_mode
+	zvm_bindkey vicmd '^c' exit_normal_mode
 }
 
 zinit ice depth=1
