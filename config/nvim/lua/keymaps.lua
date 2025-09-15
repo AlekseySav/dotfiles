@@ -4,7 +4,7 @@ vim.keymap.set('n', '<leader>so', ':w<CR>:source<CR>')
 
 vim.keymap.set('i', '<C-c>', '<C-[>')
 
-vim.keymap.set('n', '<leader>w', ':w<CR>')
+vim.keymap.set('n', '<leader>w', ':w<CR>:echo ""<CR>')
 vim.keymap.set('n', '<leader>x', ':!chmod +x %<CR><Enter>')
 
 vim.keymap.set('v', '<leader>y', '"+y')

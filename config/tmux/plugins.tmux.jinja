@@ -1,0 +1,8 @@
+set-option -g default-shell "{{ zsh.path }}"
+
+set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-yank'
+
+run "$HOME/{{ tmux.repos.tpm }}/tpm"

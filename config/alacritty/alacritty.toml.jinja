@@ -27,6 +27,10 @@ style = "Regular"
 [window]
 startup_mode = "Maximized"
 decorations = "None"
+dimensions = { columns = 130, lines = 38 }
 
 [keyboard]
-bindings = [{ key = "N", mods = "Control | Shift", action = "CreateNewWindow" }]
+bindings = [
+	{ key = "N", mods = "Control | Shift", action = "CreateNewWindow" },
+	{ key = "M", mods = "Control | Shift", action = "ToggleMaximized" },
+]

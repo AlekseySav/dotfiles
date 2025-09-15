@@ -1,5 +1,9 @@
 vim.g.mapleader = ' '
 
+vim.g.gitgutter_sign_added = '┃'
+vim.g.gitgutter_sign_modified = '┃'
+vim.g.gitgutter_sign_removed = '┃'
+
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.wrap = false

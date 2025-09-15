@@ -17,6 +17,10 @@ exit_normal_mode() {
 	kill -s SIGINT $pid
 }
 
+go_to_begin() {
+	zle vi-digit-or-beginning-of-line
+}
+
 remap_c() {
 	stty -F $tty intr undef
 }
@@ -32,12 +36,15 @@ zvm_config() {
 	ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 	ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 	ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_NEX
+	ZVM_VI_EDITOR='nvim -c "set filetype=bash"'
 	zvm_define_widget exit_insert_mode
 	zvm_define_widget exit_visual_mode
 	zvm_define_widget exit_normal_mode
+	zvm_define_widget go_to_begin
 	zvm_bindkey viins '^c' exit_insert_mode
 	zvm_bindkey visual '^c' exit_visual_mode
 	zvm_bindkey vicmd '^c' exit_normal_mode
+	zvm_bindkey vicmd '_' go_to_begin
 }
 
 zinit ice depth=1
