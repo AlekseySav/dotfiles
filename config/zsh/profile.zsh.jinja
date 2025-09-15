@@ -23,8 +23,8 @@ fi
 # init
 {% for name, config in get_context().items() -%}
 {% if config.init is defined -%}
-if command -v {{ name }} >/dev/null 2>&1; then
-	eval "$({{ config.init }})"
-fi
+# if command -v {{ name }} >/dev/null 2>&1; then
+	{{ config.init }}
+# fi
 {% endif -%}
 {% endfor -%}

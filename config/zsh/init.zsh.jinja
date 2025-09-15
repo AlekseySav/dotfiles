@@ -1,12 +1,10 @@
 source "$HOME/{{ zsh.repos.zinit }}/zinit.zsh"
 
 # zsh plugins
+zinit load zsh-users/zsh-completions
+zinit load zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit load zsh-users/zsh-syntax-highlighting
-zinit ice wait lucid
-zinit load zsh-users/zsh-completions
-zinit ice wait lucid
-zinit load zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit load Aloxaf/fzf-tab
 
@@ -28,12 +26,7 @@ autoload -U compinit && compinit
 zstyle ':completion:*' menu no
 
 # key bindings
-bindkey -e
-bindkey '^ ' autosuggest-accept
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^w' forward-word
-bindkey '^b' backward-word
+bindkey '^f' autosuggest-accept
 
 # aliases
 alias ls='ls --color=auto'

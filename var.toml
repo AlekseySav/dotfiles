@@ -17,12 +17,15 @@ path = "/home/linuxbrew/.linuxbrew/bin/brew"
 setup = "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
 
 [fzf]
-init = "fzf --zsh"
+init = "eval $(fzf --zsh)"
 
 [oh-my-posh]
-init = "oh-my-posh init zsh -c $HOME/.config/oh-my-posh/config.toml"
+init = "eval $(oh-my-posh init zsh -c $HOME/.config/oh-my-posh/config.toml)"
 
 [zoxide]
-init = "zoxide init --cmd cd zsh"
+init = "eval $(zoxide init --cmd cd zsh)"
+
+[zvm]
+init = "source $HOME/.config/zvm/init.zsh"
 
 [nvim]
