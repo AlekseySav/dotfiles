@@ -10,7 +10,6 @@ exit_visual_mode() {
 	zvm_exit_visual_mode false
 	zvm_reset_prompt
 }
-
 exit_normal_mode() {
 	zvm_enter_insert_mode
 	stty -F $tty intr ^C

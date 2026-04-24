@@ -1,7 +1,3 @@
-local config_path = os.getenv('HOME') .. '/.dotfiles/config'
-local copy_to_config_path = os.getenv('HOME') .. '/.dotfiles/hooks/copy-to-config'
-local Job = require('plenary.job')
-
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 	pattern = "*.tmux",
 	command = [[set syntax=tmux]],

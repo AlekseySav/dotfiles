@@ -9,7 +9,7 @@ zinit = ".local/share/zinit"
 tpm = ".tmux/plugins/tpm"
 
 [alacritty]
-font_size = 20
+font_size = 19
 
 [brew]
 # path=/opt/homebrew/bin/brew for M1 mac

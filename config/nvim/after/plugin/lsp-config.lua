@@ -14,8 +14,9 @@ local lspconfigs = {
 	}
 }
 
-require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason').setup({
+	automatic_enable = false,
+})
 
 for _, server in ipairs(require('mason-lspconfig').get_installed_servers()) do
 	local opts = lspconfigs[server] or {}

@@ -4,7 +4,7 @@
 
 - `zsh` with `zinit`
 - `tmux` with `tpm`
-- `nvim` with `lazy.nvim` and `mason.nvim`
+- `nvim` with `vim.pack` and `mason.nvim`
 
 ### setup
 

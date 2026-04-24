@@ -1,3 +1,8 @@
+vim.g.gitgutter_sign_added = '┃'
+vim.g.gitgutter_sign_modified = '┃'
+vim.g.gitgutter_sign_removed = '┃'
+vim.g.gitgutter_sign_modified_removed = '┃'
+
 local diff_buffers = {}
 
 local function array2set(a)
@@ -25,3 +30,5 @@ vim.keymap.set('n', '<leader>dif', function()
 		diff_buffers = {}
 	end
 end)
+
+vim.pack.add { 'https://github.com/airblade/vim-gitgutter' }

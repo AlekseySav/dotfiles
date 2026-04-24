@@ -1,0 +1,4 @@
+~/src/*:src/\1:default.tmux
+~/tmp/*:tmp/\1:default.tmux
+~/src/Tel-core/*:Tel-core/\1:default.tmux
+~/.dotfiles:dotfiles:dotfiles.tmux

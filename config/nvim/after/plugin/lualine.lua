@@ -1,10 +1,11 @@
 local theme = require('lualine.themes.auto')
-theme.normal.c.bg = '#282c34'
+local bg = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'EndOfBuffer' }).bg)
 for _, n in pairs(theme) do
-	n.a = { fg = n.a.bg, bg = theme.normal.c.bg }
-	n.b = { bg = theme.normal.c.bg }
-	n.z = { fn = theme.normal.c.bg, bg = theme.normal.c.bg }
+	n.a = { fg = n.a.bg, bg = bg }
+	n.b = { bg = bg }
+	n.c = { bg = bg }
 end
+theme.terminal.b = { bg = bg, fg = bg }
 
 require('lualine').setup({
 	options = {
@@ -14,8 +15,8 @@ require('lualine').setup({
 	},
 	sections = {
 		lualine_a = { { 'mode', fmt = function(s) return '[' .. s .. ']' end } },
-		lualine_c = { 'diff' },
 		lualine_b = { { 'filename', path = 1, bg = 'none' } },
+		lualine_c = { 'diff' },
 		lualine_x = { { 'diagnostics', symbols = { error = '', warn = '', info = '', hint = '' } }, 'filetype' },
 		lualine_y = {},
 	},

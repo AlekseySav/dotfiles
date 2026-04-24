@@ -1,0 +1,16 @@
+#!/bin/bash
+
+hide_pane() {
+	tmux break-pane -dP -t background
+}
+
+show_pane() {
+	tmux join-pane -hs "$1"
+}
+
+if [[ ! -f $HOME/.dotfiles/hooks/hidden ]]; then
+	hide_pane >$HOME/.dotfiles/hooks/hidden
+else
+	show_pane "$(cat $HOME/.dotfiles/hooks/hidden)"
+	rm $HOME/.dotfiles/hooks/hidden
+fi
